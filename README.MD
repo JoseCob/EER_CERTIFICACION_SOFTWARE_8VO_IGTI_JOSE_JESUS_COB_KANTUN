@@ -1,0 +1,48 @@
+# App Movil CRM Personal con Integración Profunda en el SO con React Native + Expo con arquitectura CLEAN, MVVM, Feature first + Atomic Design.
+
+## APIS que se utilizaron en la aplicación:
+### 1.- expo-contacts
+### 2.- expo-calendar
+### 3.- expo-notifications
+
+## -- DEPENDENCIAS UTILIZADAS EN ESTE PROYECTO -- 
+1. Dependencia necesaria para mejorar el rendimiento en la navegación, consumir menos memoria y para el manejo de animaciones. 
+> Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
+- _`npx expo install react-native-screens react-native-safe-area-context react-native-gesture-handler react-native-reanimated`_
+
+2. Dependencia Principal para navegación nativa
+> Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
+- _`npx expo install @react-navigation/native`_
+
+3. Dependencia necesaria para navegación bottom-tabs
+> Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
+- _`npx expo install @react-navigation/bottom-tabs`_
+
+4. Dependencia necesaria para navegación native-stack
+> Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
+- _`npx expo install @react-navigation/native-stack`_
+
+5. Dependencia necesaria para consumir las APIS
+> Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
+- _`npx expo install axios`_
+
+## -- Intrucciones --
+Para usar todas estas dependencias en nuestro dispositivo, ejecute en la terminal estando ubicado en la ruta principal/raíz del archivo:
+- _`npx expo install`_
+> Este proceso asegura que todas las dependencias necesarias para ejecutar este proyecto se instalen correctamente en el nuevo entorno de trabajo con las versiones utilizadas en el package.json.
+
+## -- Para poder ejecutar el proyecto --
+Escribe lo siguiente en la consola/terminal, estando en la ruta raíz del proyecto:
+- _`npm start`_ / _`npx expo start`_
+
+### Seleccionamos en donde queremos renderizar el proyecto, ya sea en la web o en la app de expo GO, pulsando la tecla correspondiente para su ejecución que se muestra por la terminal de windows
+> Si se ejecutara el proyecto en un celular fisico o en el emulador, hay que tenerlo configurado para renderizar la apliación con expo Go antes de presionar la tecla "a"
+
+> En caso de seleccionar web presionando la tecla "w". Automaticamente se nos abrira el navegador predeterminado del sistema ejecutando nuestra app enfocado a web.
+
+### Imagen de ejemplo de la terminal de windows, mostrando el menú para seleccionar el modo de renderización del proyecto
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/31784924-1b08-4004-9498-149573e7b692"/>
+</p>
+
+## -- Imágenes del proyecto en móvil --

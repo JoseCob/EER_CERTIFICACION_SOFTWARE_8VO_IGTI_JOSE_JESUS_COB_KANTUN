@@ -1,4 +1,4 @@
-# App Movil CRM Personal con Integración Profunda en el SO con React Native + Expo con arquitectura CLEAN, MVVM, Feature first + Atomic Design.
+# App Móvil CRM Personal con Integración Profunda en el SO con React Native + Expo con arquitectura CLEAN, MVVM, Feature first + Atomic Design.
 
 ## APIS que se utilizaron en la aplicación:
 ### 1.- expo-contacts
@@ -26,13 +26,13 @@
 > Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
 - _`npx expo install axios`_
 
-## -- Intrucciones --
-Para usar todas estas dependencias en nuestro dispositivo, ejecute en la terminal estando ubicado en la ruta principal/raíz del archivo:
+## -- Instrucciones --
+### Para usar todas estas dependencias en nuestro dispositivo, ejecute en la terminal estando ubicado en la ruta principal/raíz del archivo:
 - _`npx expo install`_
 > Este proceso asegura que todas las dependencias necesarias para ejecutar este proyecto se instalen correctamente en el nuevo entorno de trabajo con las versiones utilizadas en el package.json.
 
 ## -- Para poder ejecutar el proyecto --
-Escribe lo siguiente en la consola/terminal, estando en la ruta raíz del proyecto:
+### Escribe lo siguiente en la consola/terminal, estando en la ruta raíz del proyecto:
 - _`npm start`_ / _`npx expo start`_
 
 ### Seleccionamos en donde queremos renderizar el proyecto, ya sea en la web o en la app de expo GO, pulsando la tecla correspondiente para su ejecución que se muestra por la terminal de windows

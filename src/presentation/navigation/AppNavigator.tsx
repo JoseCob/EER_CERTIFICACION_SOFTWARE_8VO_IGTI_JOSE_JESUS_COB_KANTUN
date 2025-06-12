@@ -6,7 +6,7 @@ const Tabs = createBottomTabNavigator();
 
 const AppNavigator = () => (
     <Tabs.Navigator>
-        <Tabs.Screen name="Home" component={HomeScreen}/>
+        <Tabs.Screen name="Inicio" component={HomeScreen}/>
     </Tabs.Navigator>
 );
 

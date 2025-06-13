@@ -1,6 +1,6 @@
 import { registerRootComponent } from 'expo';
 
-import App from './app/App'; //Ruta para inicializar el proyecto por nuestra navegación de react
+import App from './App'; //Ruta para inicializar el proyecto por nuestra navegación de react
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
 // It also ensures that whether you load the app in Expo Go or in a native build,

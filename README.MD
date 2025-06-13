@@ -1,34 +1,55 @@
 # App Móvil CRM Personal con Integración Profunda en el SO con React Native + Expo con arquitectura CLEAN, MVVM, Feature first + Atomic Design.
 
-## APIS que se utilizaron en la aplicación:
-### 1.- expo-contacts
-### 2.- expo-calendar
-### 3.- expo-notifications
+## -- Tecnologías y Librerías que se utilizaron en la aplicación --
+1. expo-contacts
+2. expo-calendar
+3. expo-notifications
+4. axios
+5. SQLite
+6. Zustand
+7. React Navigation
+8. Advice Slip JSON API: https://api.adviceslip.com
 
 ## -- DEPENDENCIAS UTILIZADAS EN ESTE PROYECTO -- 
-1. Dependencia necesaria para mejorar el rendimiento en la navegación, consumir menos memoria y para el manejo de animaciones. 
-> Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
-- _`npx expo install react-native-screens react-native-safe-area-context react-native-gesture-handler react-native-reanimated`_
-
-2. Dependencia Principal para navegación nativa
+1. Dependencia necesaria para navegación nativa
 > Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
 - _`npx expo install @react-navigation/native`_
+
+2. Dependencia necesaria para el manejo de la barra de estado para iOS y Android
+> Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
+- _`npx expo install expo-status-bar`_
 
 3. Dependencia necesaria para navegación bottom-tabs
 > Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
 - _`npx expo install @react-navigation/bottom-tabs`_
 
-4. Dependencia necesaria para navegación native-stack
-> Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
-- _`npx expo install @react-navigation/native-stack`_
-
-5. Dependencia necesaria para consumir las APIS
+4. Dependencia necesaria para consumir las APIS
 > Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
 - _`npx expo install axios`_
 
+5. Dependencia necesaria para consumir la librería de contactos
+> Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
+- _`npx expo install expo-contacts`_
+
+6. Dependencia necesaria para consumir la librería de calendario
+> Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
+- _`npx expo install expo-calendar`_
+
+7. Dependencia necesaria para consumir la librería de notificaciones push
+> Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
+- _`npx expo install expo-notifications`_
+
+8. Dependencia necesaria para guardar datos localmente en una base de datos SQL por "SQLite"
+> Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
+- _`npx expo install expo-sqlite`_
+
+9. Dependencia necesaria para el manejo de estado global
+> Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
+- _`npm install Zustand`_
+
 ## -- Instrucciones --
 ### Para usar todas estas dependencias en nuestro dispositivo, ejecute en la terminal estando ubicado en la ruta principal/raíz del archivo:
-- _`npx expo install`_
+- _`npx expo install`_ / _`npm install`
 > Este proceso asegura que todas las dependencias necesarias para ejecutar este proyecto se instalen correctamente en el nuevo entorno de trabajo con las versiones utilizadas en el package.json.
 
 ## -- Para poder ejecutar el proyecto --

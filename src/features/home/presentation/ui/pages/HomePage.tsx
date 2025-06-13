@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-const HomeScreen = () => {
+const HomePage = () => {
 
     return (
         <View style={styles.container}>
@@ -25,4 +25,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default HomeScreen;
+export default HomePage;

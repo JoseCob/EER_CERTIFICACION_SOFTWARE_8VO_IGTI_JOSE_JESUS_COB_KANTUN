@@ -1,14 +1,13 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-const HomeScreen = () => {
+const DashPage = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>¡Bienvenido a la app de CRM 😊!</Text>
+            <Text style={styles.title}>¡Esta vista es del DashBoard!</Text>
         </View>
     );
-
 };
 
 const styles = StyleSheet.create({
@@ -25,4 +24,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default HomeScreen;
+export default DashPage;

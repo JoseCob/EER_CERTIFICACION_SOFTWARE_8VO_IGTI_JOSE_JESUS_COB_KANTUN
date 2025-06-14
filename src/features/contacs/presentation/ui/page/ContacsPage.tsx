@@ -2,12 +2,12 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import SafeLayout from '../../../../../shared/components/layouts/SafeLayout';
 
-const DashPage = () => {
+const ContacsPage = () => {
 
     return (
         <SafeLayout>
             <View style={styles.container}>
-                <Text style={styles.title}>¡Esta vista es del DashBoard!</Text>
+                <Text style={styles.title}>¡Esta vista es de Contactos!</Text>
             </View>
         </SafeLayout>
     );
@@ -27,4 +27,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default DashPage;
+export default ContacsPage;

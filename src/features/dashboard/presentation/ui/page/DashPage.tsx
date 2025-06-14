@@ -1,12 +1,15 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import SafeLayout from '../../../../../shared/components/layouts/SafeLayout';
 
 const DashPage = () => {
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>¡Esta vista es del DashBoard!</Text>
-        </View>
+        <SafeLayout>
+            <View style={styles.container}>
+                <Text style={styles.title}>¡Esta vista es del DashBoard!</Text>
+            </View>
+        </SafeLayout>
     );
 };
 

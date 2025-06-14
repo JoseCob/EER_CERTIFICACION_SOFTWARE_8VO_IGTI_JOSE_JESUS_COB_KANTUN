@@ -7,7 +7,7 @@ const ContacsPage = () => {
     return (
         <SafeLayout>
             <View style={styles.container}>
-                <Text style={styles.title}>¡Esta vista es del DashBoard!</Text>
+                <Text style={styles.title}>¡Esta vista es de Contactos!</Text>
             </View>
         </SafeLayout>
     );

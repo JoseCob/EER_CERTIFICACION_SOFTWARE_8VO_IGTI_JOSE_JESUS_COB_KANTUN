@@ -21,14 +21,17 @@ const HomePage = () => {
                         )} 
                     </Pressable>
                 </View>
-                <View>
-                    <Button title="Omitido" onPress={() => console.log("Botón omitido")}/>
-                    <Button title="Esta semana" onPress={() => console.log("Botón esta semana")}/>
+                <View style={styles.reminderButtons}>
+                    <Button title="omitido" onPress={() => console.log("Botón omitido")}/>
+                    <Button title="esta semana" onPress={() => console.log("Botón esta semana")}/>
                     <Button title="proximo" onPress={() => console.log("Botón proximo")}/>
                 </View>
                 <View>
                     <View>
-                        <Image />
+                        <Image 
+                            source={require('../../../../../../assets/photo_prototype.png')}
+                            style={styles.contactImg}
+                        />
                         <Text>*Nombre</Text>
                         <Text>*Calendario</Text>
                         <Text>*Nota</Text>
@@ -68,7 +71,7 @@ const styles = StyleSheet.create({
     remindersHeader:{
         flexDirection: 'row',
         justifyContent:'space-between',
-        marginBottom: 8,
+        marginBottom: 16,
     },
     remindersTitle:{
         color: '#0089e8',
@@ -76,7 +79,7 @@ const styles = StyleSheet.create({
         textTransform:'uppercase',
         fontSize: 20,
     },
-    //Estilo al presionar el botón por Pressable
+    //color del texto al presionar el botón por Pressable
     pressedView:{
         color: 'gray',
     },
@@ -84,6 +87,22 @@ const styles = StyleSheet.create({
     btnView:{
         color: 'tomato',
         fontSize: 16,
+    },
+
+    //Contenedor de los botones
+    reminderButtons:{
+        width: '100%',
+        flexDirection:'row',
+        margin: 0,
+        justifyContent:'space-between',
+        marginBottom: 16,
+    },
+
+    //Card para el contacto
+    contactImg:{
+        resizeMode:'contain',
+        width: 65,
+        height: 65,
     },
 })
 

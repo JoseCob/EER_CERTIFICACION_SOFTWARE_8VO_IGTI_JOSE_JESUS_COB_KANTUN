@@ -10,12 +10,13 @@ const HomePage = () => {
 
     return (
         <SafeLayout>
-            {/*Sección de bienvenida*/}
+            {/* -- Sección de bienvenida -- */}
             <View style={styles.containerMain}>
                 <Text style={styles.titleWelcome}>¡Bienvenido a la app CRM 😊!</Text>
             </View>
 
-            {/*Sección de recordatorios*/}
+            {/* -- Sección de recordatorios -- */}
+            {/* -- Sección para el contenido general -- */}
             <View style={styles.content}>
                 <View style={styles.contentHeader}>
                     <Text style={styles.contentTitle}>Recordatorios</Text>
@@ -26,7 +27,7 @@ const HomePage = () => {
                     </Pressable>
                 </View>
 
-                {/*Contenedor de los botones de recordatorios*/}
+                {/*Contenedor para los botones*/}
                 <View style={styles.reminderButtons}>
                     <TouchableOpacity 
                         style={[styles.buttonItem, styles.buttonItemLeft]} 
@@ -43,13 +44,16 @@ const HomePage = () => {
                     </TouchableOpacity>
                 </View>
 
-                {/*Contenedor de los contactos de recordatorios*/}
-                <View style={styles.contacsContainer}>
-                    <View style={styles.cardContacs}>
-                        <Image 
-                            source={require('../../../../../../assets/photo_prototype.png')}
-                            style={styles.contactImg}
-                        />
+                {/*Contenedor para los contactos*/}
+                {/* -- Sección para la tarjeta de contactos -- */}
+                <View style={styles.contacsCard}>
+                    <View style={styles.cardBody}>
+                        <View style={styles.imgContainer}>
+                            <Image 
+                                source={require('../../../../../../assets/photo_prototype.png')}
+                                style={styles.contactImg}
+                            />
+                        </View>
                         <View style={styles.contactInfo}>
                             <Text>*Nombre</Text>
                             <Text>
@@ -72,7 +76,8 @@ const HomePage = () => {
                 </View>
             </View>
 
-            {/*Sección de notas recientes*/}
+            {/* -- Sección de notas recientes -- */}
+            {/* -- Sección para el contenido general -- */}
             <View style={styles.content}>
                 <View style={styles.contentHeader}>
                     <Text style={styles.contentTitle}>Notas Recientes</Text>
@@ -82,6 +87,34 @@ const HomePage = () => {
                         )} 
                     </Pressable>
                 </View>
+
+                {/* -- Sección para la tarjeta de contactos -- */}
+                <View style={styles.noteCard}>
+                    <View style={styles.cardBody}>
+                        <View style={styles.imgContainer}>
+                            <Image 
+                                source={require('../../../../../../assets/photo_prototype.png')}
+                                style={styles.contactImg}
+                            />
+                        </View>
+                        <View style={styles.contactInfo}>
+                            <View style={styles.infoHeader}>
+                                <Text>*Nombre</Text>
+                                <Text>*Calendario </Text>
+                            </View>
+                            <Text>*Nota</Text>
+                        </View>
+                    </View>
+                </View>
+            </View>
+
+            {/* Sección de agregar Notas */}
+            <View style={styles.addNotes}>
+                <Pressable
+                    onPress={()=>console.log("Botón para agregar notas")}
+                >
+                    <Text>Este sera botón de agregar notas</Text>
+                </Pressable>
             </View>
         </SafeLayout>
     );
@@ -131,8 +164,19 @@ const styles = StyleSheet.create({
         color: 'gray',
     },
 
+    // -- Sección para la tarjeta de contactos --
+    contacsCard:{
+        backgroundColor: 'white',
+        borderBottomLeftRadius:12,
+        borderBottomRightRadius:12,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 20,
+    },
+    cardBody:{flexDirection:'row'},
+
     // -- Sección de recordatorios --
-    //Contenedor de los botones de recordatorios
+    //Contenedor para los botones
     reminderButtons:{
         flexDirection:'row',
         justifyContent:'center',
@@ -151,16 +195,16 @@ const styles = StyleSheet.create({
     },
     buttonItemLeft:{borderTopLeftRadius: 12,}, buttonItemRight:{borderTopRightRadius: 12,},
 
-    //Contenedor de los contactos de recordatorios
-    contacsContainer:{
-        backgroundColor: 'white',
-        borderBottomLeftRadius:12,
-        borderBottomRightRadius:12,
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 20,
+    //Contenedor para los contactos
+    imgContainer:{
+        justifyContent:'center',
     },
-    cardContacs:{flexDirection:'row'},
+    contactImg:{
+        resizeMode:'contain',
+        width: 75,
+        height: 75,
+        borderRadius: 50,
+    },
     contactInfo:{
         flex: 1,
         flexDirection:'column',
@@ -176,11 +220,25 @@ const styles = StyleSheet.create({
         borderRadius:16,
         backgroundColor:'#f8f8f8',
     },
-    contactImg:{
-        resizeMode:'contain',
-        width: 75,
-        height: 75,
-        borderRadius: 50,
+
+    // -- Sección de notas recientes --
+    noteCard:{
+        backgroundColor: 'white',
+        borderRadius:12,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 20,
+    },
+    infoHeader:{
+        justifyContent:'space-between',
+        flexDirection:'row',
+    },
+
+    // -- Sección para agregar notas --
+    addNotes:{
+        flex:1,
+        justifyContent:'flex-end',
+        alignItems:'center',
     },
 })
 

@@ -1,121 +1,126 @@
 import React from "react";
 import AntDesign from '@expo/vector-icons/AntDesign'; //Icono para ver más del contacto
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'; //Icono para Calendario con hora
-import Entypo from '@expo/vector-icons/Entypo'; //Icono para las notas
+import Entypo from '@expo/vector-icons/Entypo'; //Icono para las notas y el botón agregar notas
 import { StyleSheet, Text, View, Image, Pressable, TouchableOpacity  } from "react-native";
+import { ScrollView } from 'react-native';
 import SafeLayout from '../../../../../shared/components/layouts/SafeLayout';
+
 
 
 const HomePage = () => {
 
     return (
         <SafeLayout>
-            {/* -- Sección de bienvenida -- */}
-            <View style={styles.containerMain}>
-                <Text style={styles.titleWelcome}>¡Bienvenido a la app CRM 😊!</Text>
-            </View>
-
-            {/* -- Sección de recordatorios -- */}
-            {/* -- Sección para el contenido general -- */}
-            <View style={styles.content}>
-                <View style={styles.contentHeader}>
-                    <Text style={styles.contentTitle}>Recordatorios</Text>
-                    <Pressable onPress={() => console.log("Botón ver más Recordatorios")}>
-                        {({pressed}) => (
-                            <Text style={[styles.btnView, pressed && styles.pressedView]}>Ver más...</Text>                            
-                        )} 
-                    </Pressable>
+            <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+                {/* -- Sección de bienvenida -- */}
+                <View style={styles.containerMain}>
+                    <Text style={styles.titleWelcome}>¡Bienvenido a la app CRM 😊!</Text>
                 </View>
 
-                {/*Contenedor para los botones*/}
-                <View style={styles.reminderButtons}>
-                    <TouchableOpacity 
-                        style={[styles.buttonItem, styles.buttonItemLeft]} 
-                        onPress={() => console.log("Botón omitido")}>
-                        <Text style={styles.textButtonItem}>Omitido</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonItem} onPress={() => console.log("Botón esta semana")}>
-                        <Text style={styles.textButtonItem}>Esta semana</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity 
-                        style={[styles.buttonItem, styles.buttonItemRight]} 
-                        onPress={() => console.log("Botón proximo")}>
-                        <Text style={styles.textButtonItem}>Proximo</Text>
-                    </TouchableOpacity>
-                </View>
-
-                {/*Contenedor para los contactos*/}
-                {/* -- Sección para la tarjeta de contactos -- */}
-                <View style={styles.contacsCard}>
-                    <View style={styles.cardBody}>
-                        <View style={styles.imgContainer}>
-                            <Image 
-                                source={require('../../../../../../assets/photo_prototype.png')}
-                                style={styles.contactImg}
-                            />
-                        </View>
-                        <View style={styles.contactInfo}>
-                            <Text>*Nombre</Text>
-                            <Text>
-                                <MaterialCommunityIcons name="calendar-clock" size={24} color="black" /> *Calendario
-                            </Text>
-                            <Text>
-                                <Entypo name="message" size={24} color="black" /> *Nota
-                            </Text>
-                        </View>
-                        <View style={styles.seeMorecontact}>
-                            <TouchableOpacity 
-                                style={styles.bntSeeMore}
-                                onPress={() => console.log("Botón ver más del contacto")}>
-                                <View>
-                                    <AntDesign name="ellipsis1" size={24} color="black"/>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
+                {/* -- Sección de recordatorios -- */}
+                {/* -- Sección para el contenido general -- */}
+                <View style={styles.content}>
+                    <View style={styles.contentHeader}>
+                        <Text style={styles.contentTitle}>Recordatorios</Text>
+                        <Pressable onPress={() => console.log("Botón ver más Recordatorios")}>
+                            {({pressed}) => (
+                                <Text style={[styles.btnView, pressed && styles.pressedView]}>Ver más...</Text>                            
+                            )} 
+                        </Pressable>
                     </View>
-                </View>
-            </View>
 
-            {/* -- Sección de notas recientes -- */}
-            {/* -- Sección para el contenido general -- */}
-            <View style={styles.content}>
-                <View style={styles.contentHeader}>
-                    <Text style={styles.contentTitle}>Notas Recientes</Text>
-                    <Pressable onPress={() => console.log("Botón ver más Notas")}>
-                        {({pressed}) => (
-                            <Text style={[styles.btnView, pressed && styles.pressedView]}>Ver más...</Text>                            
-                        )} 
-                    </Pressable>
-                </View>
+                    {/*Contenedor para los botones*/}
+                    <View style={styles.reminderButtons}>
+                        <TouchableOpacity 
+                            style={[styles.buttonItem, styles.buttonItemLeft]} 
+                            onPress={() => console.log("Botón omitido")}>
+                            <Text style={styles.textButtonItem}>Omitido</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.buttonItem} onPress={() => console.log("Botón esta semana")}>
+                            <Text style={styles.textButtonItem}>Esta semana</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity 
+                            style={[styles.buttonItem, styles.buttonItemRight]} 
+                            onPress={() => console.log("Botón proximo")}>
+                            <Text style={styles.textButtonItem}>Proximo</Text>
+                        </TouchableOpacity>
+                    </View>
 
-                {/* -- Sección para la tarjeta de contactos -- */}
-                <View style={styles.noteCard}>
-                    <View style={styles.cardBody}>
-                        <View style={styles.imgContainer}>
-                            <Image 
-                                source={require('../../../../../../assets/photo_prototype.png')}
-                                style={styles.contactImg}
-                            />
-                        </View>
-                        <View style={styles.contactInfo}>
-                            <View style={styles.infoHeader}>
-                                <Text>*Nombre</Text>
-                                <Text>*Calendario </Text>
+                    {/* -- Sección para las tarjetas de contactos o notas -- */}
+                    <View style={styles.contacsCard}>
+                        <View style={styles.cardBody}>
+                            <View style={styles.imgContainer}>
+                                <Image 
+                                    source={require('../../../../../../assets/photo_prototype.png')}
+                                    style={styles.contactImg}
+                                />
                             </View>
-                            <Text>*Nota</Text>
+                            <View style={styles.contactInfo}>
+                                <Text>*Nombre</Text>
+                                <Text>
+                                    <MaterialCommunityIcons name="calendar-clock" size={24} color="black" /> *Calendario
+                                </Text>
+                                <Text>
+                                    <Entypo name="message" size={24} color="black" /> *Nota
+                                </Text>
+                            </View>
+                            <View style={styles.seeMorecontact}>
+                                <TouchableOpacity 
+                                    style={styles.bntSeeMore}
+                                    onPress={() => console.log("Botón ver más del contacto")}>
+                                    <View>
+                                        <AntDesign name="ellipsis1" size={24} color="black" />
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
                 </View>
-            </View>
 
-            {/* Sección de agregar Notas */}
-            <View style={styles.addNotes}>
-                <Pressable
-                    onPress={()=>console.log("Botón para agregar notas")}
-                >
-                    <Text>Este sera botón de agregar notas</Text>
-                </Pressable>
-            </View>
+                {/* -- Sección de notas recientes -- */}
+                {/* -- Sección para el contenido general -- */}
+                <View style={styles.content}>
+                    <View style={styles.contentHeader}>
+                        <Text style={styles.contentTitle}>Notas Recientes</Text>
+                        <Pressable onPress={() => console.log("Botón ver más Notas")}>
+                            {({pressed}) => (
+                                <Text style={[styles.btnView, pressed && styles.pressedView]}>Ver más...</Text>                            
+                            )} 
+                        </Pressable>
+                    </View>
+
+                    {/* -- Sección para las tarjetas de contactos o notas -- */}
+                    <View style={styles.noteCard}>
+                        <View style={styles.cardBody}>
+                            <View style={styles.imgContainer}>
+                                <Image 
+                                    source={require('../../../../../../assets/photo_prototype.png')}
+                                    style={styles.contactImg}
+                                />
+                            </View>
+                            <View style={styles.contactInfo}>
+                                <View style={styles.infoHeader}>
+                                    <Text>*Nombre</Text>
+                                    <Text>*Fecha - Creación </Text>
+                                </View>
+                                <Text>*Nota</Text>
+                            </View>
+                        </View> 
+                    </View>
+                </View>
+            </ScrollView>
+            {/* -- Sección para agregar Notas -- */}
+                <View style={styles.addNotes}>
+                    <Pressable
+                        onPress={()=>console.log("Botón para agregar notas")}
+                    >
+                        <View style={styles.btnAddNote}>
+                            <Entypo name="add-to-list" size={24} color="white" />
+                            <Text style={styles.addNoteTitle}> ¿Algo que quieras anotar?</Text>
+                        </View>
+                    </Pressable>
+                </View>
         </SafeLayout>
     );
 };
@@ -127,7 +132,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         backgroundColor: 'tomato',
         alignItems: 'center',
-        padding: 12,
+        padding: 6,
     },
     titleWelcome:{
         color: 'white',
@@ -137,6 +142,9 @@ const styles = StyleSheet.create({
     },
 
     // -- Sección para el contenido general --
+    scrollContainer: {
+        paddingBottom: 100, // 👈 para que el contenido no se tape con el botón fijo
+    },
     content:{
         justifyContent:'flex-start',
         marginTop: 28,
@@ -164,7 +172,16 @@ const styles = StyleSheet.create({
         color: 'gray',
     },
 
-    // -- Sección para la tarjeta de contactos --
+    // -- Sección para las tarjetas de contactos o notas --
+    //Tarjetas para notas
+    noteCard:{
+        backgroundColor: 'white',
+        borderRadius:12,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 20,
+    },
+    //Tarjetas para contactos
     contacsCard:{
         backgroundColor: 'white',
         borderBottomLeftRadius:12,
@@ -173,7 +190,40 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
         paddingLeft: 20,
     },
+    //Cuerpo de la tarjeta
     cardBody:{flexDirection:'row'},
+    imgContainer:{
+        justifyContent:'center',
+    },
+    //Encabezado de información para la tarjeta
+    infoHeader:{
+        justifyContent:'space-between',
+        flexDirection:'row',
+    },
+    //Contenedor de la imagen del contacto
+    contactImg:{
+        resizeMode:'contain',
+        width: 60,
+        height: 60,
+        borderRadius: 50,
+    },
+    //Contenedor para la información del contacto
+    contactInfo:{
+        flex: 1,
+        flexDirection:'column',
+        margin:16,
+    },
+    //Contenedor para el botón de "ver más"
+    seeMorecontact:{
+        justifyContent:'center',
+        alignItems: 'flex-end',
+        right: 45,
+    },
+    bntSeeMore:{
+        padding: 4,
+        borderRadius:16,
+        backgroundColor:'#f8f8f8',
+    },
 
     // -- Sección de recordatorios --
     //Contenedor para los botones
@@ -195,50 +245,29 @@ const styles = StyleSheet.create({
     },
     buttonItemLeft:{borderTopLeftRadius: 12,}, buttonItemRight:{borderTopRightRadius: 12,},
 
-    //Contenedor para los contactos
-    imgContainer:{
-        justifyContent:'center',
-    },
-    contactImg:{
-        resizeMode:'contain',
-        width: 75,
-        height: 75,
-        borderRadius: 50,
-    },
-    contactInfo:{
-        flex: 1,
-        flexDirection:'column',
-        margin:16,
-    },
-    seeMorecontact:{
-        justifyContent:'center',
-        alignItems: 'flex-end',
-        right: 45,
-    },
-    bntSeeMore:{
-        padding: 4,
-        borderRadius:16,
-        backgroundColor:'#f8f8f8',
-    },
-
-    // -- Sección de notas recientes --
-    noteCard:{
-        backgroundColor: 'white',
-        borderRadius:12,
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 20,
-    },
-    infoHeader:{
-        justifyContent:'space-between',
-        flexDirection:'row',
-    },
-
     // -- Sección para agregar notas --
     addNotes:{
-        flex:1,
-        justifyContent:'flex-end',
-        alignItems:'center',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        borderTopLeftRadius: 12,
+        borderTopRightRadius: 12,
+        backgroundColor: 'tomato', // mismo color de fondo si quieres cubrir bien
+        alignItems: 'center',
+        zIndex: 1,
+    },
+    btnAddNote:{
+        padding: 16,
+        paddingLeft: 26,
+        flexDirection: 'row',
+    },
+    addNoteTitle:{
+        width: '100%',
+        justifyContent: 'center',
+        color: 'white',
+        marginLeft: 4,
+        fontSize: 18,
     },
 })
 

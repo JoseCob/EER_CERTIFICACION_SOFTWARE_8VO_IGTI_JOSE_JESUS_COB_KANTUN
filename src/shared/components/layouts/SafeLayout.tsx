@@ -14,6 +14,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 0, //El ancho que queremos dejar de margen entre los componentes
-    backgroundColor: '#eaecf1', //Color de fondo de las pantallas
+    backgroundColor: '#eeeeee', //Color de fondo de las pantallas
   },
 });

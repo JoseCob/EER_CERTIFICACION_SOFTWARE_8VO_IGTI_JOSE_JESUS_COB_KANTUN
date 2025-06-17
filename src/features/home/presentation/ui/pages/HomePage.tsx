@@ -112,13 +112,13 @@ const HomePage = () => {
             </ScrollView>
             {/* -- Sección para agregar Notas -- */}
                 <View style={styles.addNotes}>
-                    <Pressable
-                        onPress={()=>console.log("Botón para agregar notas")}
-                    >
-                        <View style={styles.btnAddNote}>
-                            <Entypo name="add-to-list" size={24} color="white" />
-                            <Text style={styles.addNoteTitle}> ¿Algo que quieras anotar?</Text>
-                        </View>
+                    <Pressable onPress={()=>console.log("Botón para agregar notas")}>
+                        {({pressed}) => (
+                            <View style={[styles.btnAddNote, pressed && styles.pressedAddNote]}>
+                                <Entypo name="add-to-list" size={24} color="white" />
+                                <Text style={styles.addNoteTitle}> ¿Algo que quieras anotar?</Text>
+                            </View>
+                        )}
                     </Pressable>
                 </View>
         </SafeLayout>
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
 
     // -- Sección para el contenido general --
     scrollContainer: {
-        paddingBottom: 100, // 👈 para que el contenido no se tape con el botón fijo
+        paddingBottom: 100, //para que el contenido no se tape con el botón fijo
     },
     content:{
         justifyContent:'flex-start',
@@ -262,6 +262,7 @@ const styles = StyleSheet.create({
         paddingLeft: 26,
         flexDirection: 'row',
     },
+    pressedAddNote:{ backgroundColor: 'rgba(185, 184, 184, 0.19)' },
     addNoteTitle:{
         width: '100%',
         justifyContent: 'center',

@@ -8,7 +8,9 @@
 5. SQLite
 6. Zustand
 7. React Navigation
-8. Advice Slip JSON API: https://api.adviceslip.com
+8. react native circular progress
+9. react native svg
+10. Advice Slip JSON API: https://api.adviceslip.com
 
 ## -- DEPENDENCIAS UTILIZADAS EN ESTE PROYECTO -- 
 1. Dependencia necesaria para navegación nativa
@@ -46,6 +48,10 @@
 9. Dependencia necesaria para el manejo de estado global
 > Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
 - _`npm install Zustand`_
+
+10. Dependencia necesaria para crear la gráfica circular de progreso tipo anillo
+> Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
+- _`npx expo install react-native-svg react-native-circular-progress`_
 
 ## -- Instrucciones --
 ### Para usar todas estas dependencias en nuestro dispositivo, ejecute en la terminal estando ubicado en la ruta principal/raíz del archivo:

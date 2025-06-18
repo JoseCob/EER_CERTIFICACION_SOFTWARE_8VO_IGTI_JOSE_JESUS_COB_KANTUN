@@ -1,4 +1,4 @@
-# App Móvil CRM Personal con Integración Profunda en el SO con React Native + Expo con arquitectura CLEAN, MVVM, Feature first + Atomic Design.
+# App Móvil CRM Personal con Integración Profunda en el SO con React Native + Expo con Arquitectura CLEAN, MVVM, Feature First + Atomic Design.
 
 ## -- Tecnologías y Librerías que se utilizaron en la aplicación --
 1. expo-contacts

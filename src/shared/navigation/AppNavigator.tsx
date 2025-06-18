@@ -1,7 +1,7 @@
 //Navegación: react Navigator con bottom tabs
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getTabOptions } from './TabOptions'; //función modularizada para la configuración del Tabs.Navigator
-import homePage from '../../features/home/presentation/ui/pages/HomePage';
+import homePage from '../../features/home/presentation/ui/components/pages/HomePage';
 import dashPage from '../../features/dashboard/presentation/ui/page/DashPage';
 import contacsPage from '../../features/contacs/presentation/ui/page/ContacsPage';
 

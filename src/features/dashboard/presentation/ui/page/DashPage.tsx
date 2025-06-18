@@ -3,6 +3,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome'; //Icono para la tarjet
 import { AnimatedCircularProgress } from 'react-native-circular-progress'; //Dependencia para crear la gráfica circular de progreso tipo anillo
 import { StyleSheet, Text, View } from "react-native";
 import SafeLayout from '../../../../../shared/components/layouts/SafeLayout';
+import { colors, spacing, typography } from '@/shared/theme' //Hoja de Estilos generales
 
 const DashPage = () => {
 
@@ -56,8 +57,8 @@ const styles = StyleSheet.create({
         width:'92%',
         paddingTop: 2,
         paddingBottom: 2,
-        borderRadius:12,
-        backgroundColor: "white",
+        borderRadius: spacing.md,
+        backgroundColor: colors.surface,
         overflow: 'hidden',
     },
     content:{
@@ -66,19 +67,19 @@ const styles = StyleSheet.create({
         justifyContent:'space-between',
         flexDirection: 'row',
         alignItems:'center',
-        margin: 16,
+        margin: spacing.lg,
     },
     leftGraphic:{
-        paddingTop: 0,
-        paddingBottom: 0,
+        paddingTop: spacing.none,
+        paddingBottom: spacing.none,
     },
     //Contenido del grafico derecho
     rightGraphic:{
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 12,
-        paddingRight: 12,
-        borderRadius: 16,
+        paddingTop: spacing.md,
+        paddingBottom: spacing.md,
+        paddingLeft:  spacing.md,
+        paddingRight:  spacing.md,
+        borderRadius: spacing.lg,
         borderWidth: .5,
         borderColor: 'rgba(139, 137, 137, 0.57)',
     },
@@ -88,20 +89,20 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
     resultText:{
-        margin: 8,
+        margin: spacing.sm,
         textAlign:'center',
         color:'tomato',
-        fontSize: 20,
+        fontSize: typography.fontSizeL,
     },
     countText:{
         textAlign:'center',
-        margin: 8,
+        margin: spacing.sm,
         color: 'black',
         fontWeight:'bold',
-        fontSize: 24,
+        fontSize: typography.fontSizeXL,
     },
     resultSubText:{
-        fontSize:16,
+        fontSize: typography.fontSizeM,
         textAlign:'center',
         color:'#a5a6a9',
     },

@@ -4,9 +4,8 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'; 
 import Entypo from '@expo/vector-icons/Entypo'; //Icono para las notas y el botón agregar notas
 import { StyleSheet, Text, View, Image, Pressable, TouchableOpacity  } from "react-native";
 import { ScrollView } from 'react-native';
-import SafeLayout from '../../../../../shared/components/layouts/SafeLayout';
-
-
+import SafeLayout from '../../../../../../shared/components/layouts/SafeLayout';
+import { colors, spacing, typography } from '@/shared/theme' //Hoja de Estilos generales
 
 const HomePage = () => {
 
@@ -126,6 +125,9 @@ const HomePage = () => {
 };
 
 const styles = StyleSheet.create({
+    scrollContainer: {
+        paddingBottom: 100, //para que el contenido no se tape con el botón fijo
+    },
 
     // -- Sección de bienvenida --
     containerMain:{
@@ -135,37 +137,34 @@ const styles = StyleSheet.create({
         padding: 6,
     },
     titleWelcome:{
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 22,
+        color: colors.surface,
+        fontWeight: typography.fontWeightBold,
+        fontSize: typography.fontSizeXL,
         margin: 22,
     },
 
     // -- Sección para el contenido general --
-    scrollContainer: {
-        paddingBottom: 100, //para que el contenido no se tape con el botón fijo
-    },
     content:{
         justifyContent:'flex-start',
         marginTop: 28,
-        marginLeft: 16,
-        marginRight: 16,
+        marginLeft: spacing.lg,
+        marginRight: spacing.lg,
     },
     contentHeader:{
         flexDirection: 'row',
         justifyContent:'space-between',
-        marginBottom: 16,
+        marginBottom: spacing.lg,
     },
     contentTitle:{
-        color: '#0089e8',
+        color: colors.titleText,
         fontWeight: 'bold',
         textTransform:'uppercase',
-        fontSize: 20,
+        fontSize: typography.fontSizeL,
     },
     //Color del texto por defecto en "Ver más.."
     btnView:{
-        color: 'tomato',
-        fontSize: 16,
+        color: colors.surface,
+        fontSize: typography.fontSizeM,
     },
     //color del texto al presionar el botón por Pressable
     pressedView:{
@@ -175,20 +174,20 @@ const styles = StyleSheet.create({
     // -- Sección para las tarjetas de contactos o notas --
     //Tarjetas para notas
     noteCard:{
-        backgroundColor: 'white',
-        borderRadius:12,
-        paddingTop: 10,
-        paddingBottom: 10,
+        backgroundColor: colors.surface,
+        borderRadius:spacing.md,
+        paddingTop: spacing.md,
+        paddingBottom: spacing.md,
         paddingLeft: 20,
     },
     //Tarjetas para contactos
     contacsCard:{
-        backgroundColor: 'white',
-        borderBottomLeftRadius:12,
-        borderBottomRightRadius:12,
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 20,
+        backgroundColor: colors.surface,
+        borderBottomLeftRadius: spacing.md,
+        borderBottomRightRadius: spacing.md,
+        paddingTop: spacing.md,
+        paddingBottom: spacing.md,
+        paddingLeft: spacing.md,
     },
     //Cuerpo de la tarjeta
     cardBody:{flexDirection:'row'},
@@ -211,7 +210,7 @@ const styles = StyleSheet.create({
     contactInfo:{
         flex: 1,
         flexDirection:'column',
-        margin:16,
+        margin: spacing.lg,
     },
     //Contenedor para el botón de "ver más"
     seeMorecontact:{
@@ -220,8 +219,8 @@ const styles = StyleSheet.create({
         right: 45,
     },
     bntSeeMore:{
-        padding: 4,
-        borderRadius:16,
+        padding: spacing.xs,
+        borderRadius: spacing.lg,
         backgroundColor:'#f8f8f8',
     },
 
@@ -237,28 +236,28 @@ const styles = StyleSheet.create({
         width:'33.5%',
         alignItems:'center',
         backgroundColor: 'white',
-        padding:16,
+        padding: spacing.lg,
     },
     textButtonItem:{
         fontWeight:'bold',
-        fontSize: 16,
+        fontSize: typography.fontSizeM,
     },
-    buttonItemLeft:{borderTopLeftRadius: 12,}, buttonItemRight:{borderTopRightRadius: 12,},
+    buttonItemLeft:{borderTopLeftRadius: spacing.md,}, buttonItemRight:{borderTopRightRadius: spacing.md,},
 
     // -- Sección para agregar notas --
     addNotes:{
         position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        borderTopLeftRadius: 12,
-        borderTopRightRadius: 12,
-        backgroundColor: 'tomato', // mismo color de fondo si quieres cubrir bien
+        bottom: spacing.none,
+        left: spacing.none,
+        right: spacing.none,
+        borderTopLeftRadius: spacing.md,
+        borderTopRightRadius: spacing.md,
+        backgroundColor: colors.backgroundApp, // mismo color de fondo si quieres cubrir bien
         alignItems: 'center',
         zIndex: 1,
     },
     btnAddNote:{
-        padding: 16,
+        padding: spacing.lg,
         paddingLeft: 26,
         flexDirection: 'row',
     },
@@ -266,9 +265,9 @@ const styles = StyleSheet.create({
     addNoteTitle:{
         width: '100%',
         justifyContent: 'center',
-        color: 'white',
-        marginLeft: 4,
-        fontSize: 18,
+        color: colors.surface,
+        marginLeft: spacing.xs,
+        fontSize: typography.fontSizeL,
     },
 })
 

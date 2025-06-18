@@ -2,6 +2,7 @@ import React from "react";
 import Ionicons from '@expo/vector-icons/Ionicons'; //Icono para agregar contactos
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import SafeLayout from '../../../../../shared/components/layouts/SafeLayout';
+import { colors, spacing, typography } from '@/shared/theme' //Hoja de Estilos generales
 
 const ContacsPage = () => {
 
@@ -27,11 +28,12 @@ const ContacsPage = () => {
                 </View>
             </View>
             <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
-                <Pressable onPress={() => console.log("Botón agregar nuevo contacto")}>
+                <Pressable onPress={() => console.log("clic al botón del contacto")}>
                     {({pressed}) => (
                         <View style={[styles.btnAddContact, pressed && styles.pressedContact]}>
+                            {/* Aqui va el icono del contacto */}
                             <Ionicons name="person-add-outline" style={styles.contactIcon} />
-                            <Text style={styles.textAddContact}>Contacto 1</Text>
+                            <Text style={styles.texContact}>Contacto 1</Text>
                         </View>
                     )} 
                 </Pressable>
@@ -46,11 +48,11 @@ const styles = StyleSheet.create({
     },
     headerContent:{
         position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
+        top: spacing.none,
+        left: spacing.none,
+        right: spacing.none,
         zIndex: 1,
-        backgroundColor:'#eeeeee',
+        backgroundColor: colors.background,
     },
     container:{
         justifyContent: 'flex-start',
@@ -58,41 +60,45 @@ const styles = StyleSheet.create({
         marginTop: 60,
     },
     title:{
-        color: '#0089e8',
+        color: colors.titleText,
         fontWeight: 'bold',
         textTransform:'uppercase',
-        fontSize: 20,
+        fontSize: typography.fontSizeL,
     },
     separator:{
         height: 1, // Altura de la línea
         borderWidth: 1,
         width: '80%',
-        borderColor: 'tomato', // Color de la línea
+        borderColor: colors.backgroundApp, // Color de la línea
         marginVertical: 10, // Espacio vertical
     },
     bodyContacs:{
-        marginTop: 12,
+        marginTop: spacing.md,
     },
     btnAddContact:{
         flexDirection: 'row',
         alignItems: 'center',
         paddingLeft: 40,
-        paddingTop: 12,
-        paddingBottom: 12,
+        paddingTop: spacing.md,
+        paddingBottom: spacing.md,
     },
     pressedContact:{
         backgroundColor: '#e3e3e3',
     },
     contactIcon:{
         borderRadius: 26,
-        padding: 12,
-        marginRight: 12,
-        fontSize: 24,
-        color: 'white',
-        backgroundColor: 'tomato',
+        padding: spacing.md,
+        marginRight: spacing.md,
+        fontSize: typography.fontSizeXL,
+        color: colors.surface,
+        backgroundColor: colors.backgroundApp,
     },
     textAddContact:{
-        color: 'tomato',
+        color: colors.backgroundApp,
+        fontSize: typography.fontSizeL,
+    },
+    texContact:{
+        color: colors.defaultColor,
         fontSize: 18,
     },
     lineContact:{

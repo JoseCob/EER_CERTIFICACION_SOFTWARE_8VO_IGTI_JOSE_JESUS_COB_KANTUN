@@ -2,7 +2,7 @@ import React from "react";
 import FontAwesome from '@expo/vector-icons/FontAwesome'; //Icono para la tarjeta de relaciones
 import { AnimatedCircularProgress } from 'react-native-circular-progress'; //Dependencia para crear la gráfica circular de progreso tipo anillo
 import { StyleSheet, Text, View } from "react-native";
-import SafeLayout from '../../../../../shared/components/layouts/SafeLayout';
+import SafeLayout from '@/shared/components/layouts/SafeLayout';
 import { colors, spacing, typography } from '@/shared/theme' //Hoja de Estilos generales
 
 const DashPage = () => {

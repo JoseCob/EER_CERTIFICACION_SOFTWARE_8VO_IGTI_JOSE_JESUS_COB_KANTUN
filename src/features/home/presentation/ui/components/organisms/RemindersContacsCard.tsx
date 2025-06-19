@@ -44,12 +44,16 @@ const styles = StyleSheet.create({
         backgroundColor: colors.surface,
         borderBottomLeftRadius: spacing.md,
         borderBottomRightRadius: spacing.md,
-        paddingTop: spacing.md,
-        paddingBottom: spacing.md,
-        paddingLeft: spacing.md,
+        paddingTop: spacing.sm,
+        paddingBottom: spacing.sm,
+        paddingLeft: spacing.none,
     },
     //Cuerpo de la tarjeta
-    cardBody:{flexDirection:'row'},
+    cardBody:{
+        flexDirection:'row',
+        paddingLeft:spacing.md,
+        paddingBottom: spacing.sm,
+    },
     imgContainer:{
         justifyContent:'center',
     },

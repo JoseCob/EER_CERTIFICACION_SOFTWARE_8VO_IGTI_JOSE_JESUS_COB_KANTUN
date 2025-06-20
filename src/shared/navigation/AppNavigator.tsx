@@ -2,7 +2,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getTabOptions } from './TabOptions'; //función modularizada para la configuración del Tabs.Navigator
 import homePage from '../../features/home/presentation/ui/components/pages/HomePage';
-import dashPage from '../../features/dashboard/presentation/ui/components/pages/DashPage';
+import dashBoardPage from '../../features/dashboard/presentation/ui/components/pages/DashBoardPage';
 import contacsPage from '../../features/contacs/presentation/ui/components/pages/ContacsPage';
 
 const Tabs = createBottomTabNavigator();
@@ -10,7 +10,7 @@ const Tabs = createBottomTabNavigator();
 const AppNavigator = () => (
     <Tabs.Navigator screenOptions={getTabOptions}>
         <Tabs.Screen name="Inicio" component={homePage}/>
-        <Tabs.Screen name="Resultados" component={dashPage}/>
+        <Tabs.Screen name="Resultados" component={dashBoardPage}/>
         <Tabs.Screen name="Contactos" component={contacsPage}/>
     </Tabs.Navigator>
 );

@@ -25,25 +25,6 @@ export default function RecentNotesCard () {
                         </View>
                     )}
                 </Pressable>
-                <Pressable onPress={()=> console.log("Clic en la nota del contacto")}>
-                    {({pressed}) => (
-                        <View style={[styles.cardBody, pressed && styles.pressedCardBody]}>
-                            <View style={styles.imgContainer}>
-                                <Image 
-                                    source={require('../../../../../../../assets/photo_prototype.png')}
-                                    style={styles.contactImg}
-                                />
-                            </View>
-                            <View style={styles.contactInfo}>
-                                <View style={styles.infoHeader}>
-                                    <Text>*Nombre</Text>
-                                    <Text>*Fecha - Creación </Text>
-                                </View>
-                                <Text>*Nota</Text>
-                            </View>
-                        </View>
-                    )}
-                </Pressable>
             </View>
         </View>
     );

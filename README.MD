@@ -4,12 +4,13 @@
 1. expo-contacts
 2. expo-calendar
 3. expo-notifications
-4. axios
-5. SQLite
-6. Zustand
-7. React Navigation
-8. react native circular progress
-9. react native svg
+4. SQLite
+5. Zustand
+6. React Navigation
+7. react native circular progress
+8. react native svg
+### -- Puede que se implemente --
+9. axios
 10. Advice Slip JSON API: https://api.adviceslip.com
 
 ## -- DEPENDENCIAS UTILIZADAS EN ESTE PROYECTO -- 

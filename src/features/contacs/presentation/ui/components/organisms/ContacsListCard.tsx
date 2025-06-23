@@ -1,16 +1,35 @@
 import React from "react";
-import { StyleSheet, View, Text, Pressable } from "react-native";
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { colors, spacing, typography } from '@/shared/theme';
+import { StyleSheet, View, Text, Pressable, Image } from "react-native";
+import { colors, spacing } from '@/shared/theme';
+import { GetContactInitials } from "@/shared/utils/GetContactInitials";
+import { ContactEntity } from '@/features/contacs/domain/entities/ContactEntity'; // o la ruta correcta
 
-export default function ContacsListCard () {
+
+interface Props {
+    contact: ContactEntity;
+    onPress: () => void;
+}
+
+export default function ContacsListCard ({ contact, onPress  }: Props) {
     return (
-        <Pressable onPress={() => console.log("clic al botón del contacto")}>
-            {({pressed}) => (
+        //Maqueta del diseño para la lista de contactos
+        <Pressable onPress={() => {onPress()}}>
+            {({ pressed }) => (
                 <View style={[styles.btnAddContact, pressed && styles.pressedContact]}>
-                    {/* Aqui va el icono del contacto */}
-                    <Ionicons name="person-add-outline" style={styles.contactIcon} />
-                    <Text style={styles.texContact}>Contacto 1</Text>
+                    {/* Aqui va el icono/imagen del contacto */}
+                    {contact.image && contact.image ? (
+                        <Image
+                            source={{ uri: contact.image }}
+                            style={styles.contactIcon}
+                        />
+                    ) : (
+                        //Muestra las iniciales del contacto si no tiene imagen de perfil desde contactos del celular
+                        <View style={styles.contactIcon}>
+                            <Text style={styles.initials}>{GetContactInitials(contact.name)}</Text>
+                        </View>
+                    )}
+                    {/* Aqui va el Primer y segundo Nombre del contacto */}
+                    <Text style={styles.texContact}>{contact.name}</Text>
                 </View>
             )} 
         </Pressable>
@@ -29,15 +48,21 @@ const styles = StyleSheet.create({
         backgroundColor: colors.btnPressed,
     },
     contactIcon:{
+        width: 48,
+        height: 48,
         borderRadius: 26,
-        padding: spacing.md,
         marginRight: spacing.md,
-        fontSize: typography.fontSizeXL,
-        color: colors.surface,
-        backgroundColor: colors.backgroundApp,
+        backgroundColor: "#fc7e56",
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     texContact:{
         color: colors.defaultColor,
+        fontSize: 18,
+    },
+    initials: {
+        color: colors.surface,
+        fontWeight: 'bold',
         fontSize: 18,
     },
 })

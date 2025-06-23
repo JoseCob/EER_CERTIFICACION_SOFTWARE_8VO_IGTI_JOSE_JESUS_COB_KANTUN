@@ -88,9 +88,9 @@ export default function TestModal(){
             </Modal>
 
             {/*ModalScreen.tsx-> molecules -> Modal de prueba*/}
-            <ModalScreen visible={listVisible}>
+            {/* <ModalScreen visible={listVisible}>
                 <ContacsListCard />
-            </ModalScreen>
+            </ModalScreen> */}
         </SafeLayout>
     )
 }

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import { StyleSheet, View, Text, Modal, Pressable } from "react-native";
 import { spacing } from "@/shared/theme";
 
@@ -8,19 +8,21 @@ interface ModalScreenProps {
     visible: boolean;
     /** Contenido que irá dentro del modal */
     children?: React.ReactNode;
+    onClose: () => void; // para cerrar el modal
 }
 
-const ModalScreen:React.FC<ModalScreenProps> = ({ visible, children }) => {
-    const [listVisible, setListVisible] = useState(false); //muestra el modal de la lista de contactos
-
+const ModalScreen:React.FC<ModalScreenProps> = ({ visible, children, onClose }) => {
     return (
         <Modal
             animationType="slide"
             visible={visible}
-            onRequestClose={() => (false)} // Botón de retroceder desde Android(botón fisico del celular)
+            onRequestClose={onClose} // Botón de retroceder desde Android(botón fisico del celular)
         >
             <View style={styles.containerCancel}>
-                <Pressable onPress={()=> [setListVisible(false), console.log("Botón cancelar Modal")]}>
+                <Pressable onPress={()=> {
+                    onClose(); 
+                    console.log("Botón cancelar modal");
+                }}>
                     <Text style={styles.textCancel}>Cancelar</Text>
                 </Pressable>
             </View>

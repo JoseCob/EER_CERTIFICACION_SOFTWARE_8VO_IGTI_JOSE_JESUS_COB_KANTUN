@@ -1,18 +1,17 @@
-//Modal que muestra una lista de contactos con relaciones creadas 
+//Formulario para crear relaciones de los contactos
 import React from "react";
 import { StyleSheet, View, Text, Modal, Pressable } from "react-native";
 import { spacing, typography } from "@/shared/theme";
 
 //props para el modal
-interface ModalScreenProps {
+interface FormModalProps {
     /** Controla la visibilidad del modal */
     visible: boolean;
     /** Contenido que irá dentro del modal */
-    children?: React.ReactNode;
     onClose: () => void; // para cerrar el modal
 }
 
-const ModalScreen:React.FC<ModalScreenProps> = ({ visible, children, onClose }) => {
+const RelationshipFormModal:React.FC<FormModalProps> = ({ visible, onClose }) => {
     return (
         <Modal
             animationType="slide"
@@ -30,11 +29,10 @@ const ModalScreen:React.FC<ModalScreenProps> = ({ visible, children, onClose }) 
                 </View>
             </View>
             <Text style={styles.titleText}>Relaciones</Text>
-            {children}
         </Modal>
     );
 }
-export default ModalScreen;
+export default RelationshipFormModal;
 
 const styles = StyleSheet.create({
     modalHeader:{

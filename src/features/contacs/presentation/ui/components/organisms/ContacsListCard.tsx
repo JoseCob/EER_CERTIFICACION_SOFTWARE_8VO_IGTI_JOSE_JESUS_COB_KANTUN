@@ -1,9 +1,8 @@
 import React from "react";
 import { StyleSheet, View, Text, Pressable, Image } from "react-native";
-import { colors, spacing } from '@/shared/theme';
+import { colors, spacing, typography } from '@/shared/theme';
 import { GetContactInitials } from "@/shared/utils/GetContactInitials";
-import { ContactEntity } from '@/features/contacs/domain/entities/ContactEntity'; // o la ruta correcta
-
+import { ContactEntity } from '@/features/contacs/domain/entities/ContactEntity';
 
 interface Props {
     contact: ContactEntity;
@@ -40,7 +39,7 @@ const styles = StyleSheet.create({
     btnAddContact:{
         flexDirection: 'row',
         alignItems: 'center',
-        paddingLeft: 40,
+        paddingLeft: spacing.xxl,
         paddingTop: spacing.md,
         paddingBottom: spacing.md,
     },
@@ -48,10 +47,10 @@ const styles = StyleSheet.create({
         backgroundColor: colors.btnPressed,
     },
     contactIcon:{
-        width: 48,
-        height: 48,
-        borderRadius: 26,
-        marginRight: spacing.md,
+        width: 60,
+        height: 60,
+        borderRadius: 80,
+        marginRight: spacing.lg,
         backgroundColor: "#fc7e56",
         justifyContent: 'center',
         alignItems: 'center',
@@ -63,6 +62,6 @@ const styles = StyleSheet.create({
     initials: {
         color: colors.surface,
         fontWeight: 'bold',
-        fontSize: 18,
+        fontSize: typography.fontSizeXL,
     },
 })

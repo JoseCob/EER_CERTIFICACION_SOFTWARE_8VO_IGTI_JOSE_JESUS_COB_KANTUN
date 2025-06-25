@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { View, ActivityIndicator, Alert, Linking, Platform, AppState, AppStateStatus } from "react-native";
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import ContacsTemplate from "../templates/ContacsTemplate";
@@ -6,11 +6,16 @@ import ContacsHeaderTemplate from "../templates/ContacsHeaderTemplate";
 import ContacsListTemplate from "../templates/ContacsListTemplate";
 import { UseContactsPermissionStore } from "../../../store/ContactsPermissionStore";
 import { RootTabNavigation } from '@/shared/navigation/NavigatorTypes'; //Navegación tipada para acceder a cualquier vista desde componentes externos
+import AddRelationshipModal from '../molecules/AddRelationshipModal';
+import { ContactEntity } from "@/features/contacs/domain/entities/ContactEntity";
+
 
 export default function ContacsPage () {
     const { contacts, loading, permissionDenied, fetchContacts   } = UseContactsPermissionStore();
     const navigation = useNavigation<RootTabNavigation>();
     const appState = useRef(AppState.currentState);
+    const [AddRelationship, setAddRelationship] = useState(false);
+     const [selectedContact, setSelectedContact] = useState<ContactEntity | null>(null);
     
     // Detecta si la app vuelve del background (ej: después de abrir Configuración)
     useEffect(() => {
@@ -45,7 +50,7 @@ export default function ContacsPage () {
                                 },
                             },
                             {
-                                text: "Volver al inicio",
+                                text: "Ir al inicio",
                                 onPress: () => navigation.navigate("Inicio" as never),
                             },
                         ]
@@ -71,10 +76,21 @@ export default function ContacsPage () {
                 ) : (
                   <ContacsListTemplate
                     contacts={contacts}
-                    onSelectContact={(contact) => console.log("Contacto seleccionado:", contact.name)}
+                    onSelectContact={(contact) => {
+                        console.log("Contacto seleccionado:", contact.name)
+                        setSelectedContact(contact); // Guarda el contacto seleccionado
+                        setAddRelationship(true); // Muestra modal de crear relación
+                    }}
                   />
                 )}
             </ContacsTemplate>
+
+            {/*Modal que se abrira al seleccionar un contacto para proceder a crear la relación */}
+            <AddRelationshipModal 
+                visible={AddRelationship} 
+                onClose={() => setAddRelationship(false)} 
+                contact={selectedContact} //Pasas el contacto seleccionado
+            />
         </View>
     );
 }

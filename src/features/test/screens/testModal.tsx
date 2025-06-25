@@ -1,5 +1,6 @@
-import React, {useState} from "react";
-import { StyleSheet, View, Text, Modal, Pressable, TextInput  } from 'react-native';
+//Modal para crear notas, interaciones y recordatorios de los contactos con relaciones existentes
+import React, {useState, useEffect} from "react";
+import { StyleSheet, View, Text, Modal, Pressable, TextInput, FlatList  } from 'react-native';
 import { spacing, colors, typography } from '@/shared/theme';
 import SafeLayout from "@/shared/ui/components/layouts/SafeLayout";
 import Ionicons from '@expo/vector-icons/Ionicons'; //Icono para notas
@@ -7,17 +8,18 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'; //Icono para inter
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5'; // Icono para calendario
 import ContacsListCard from "@/features/contacs/presentation/ui/components/organisms/ContacsListCard";
 import ModalScreen from "@/shared/ui/components/molecules/ModalScreen";
-
-// interface Props {
-//   visible: boolean;
-//   onClose: () => void;
-// }
+import { UseContactsPermissionStore } from "@/features/contacs/presentation/store/ContactsPermissionStore";
 
 export default function TestModal(){
     const [modalVisible, setModalVisible] = useState(false); //para mostrar el modal de añadir notas
     const [listVisible, setListVisible] = useState(false); //muestra el modal de la lista de contactos
     const [activeForm, setActiveForm] = useState<'note' | 'interaction' | 'reminder'>('note'); //Activa el estilo del botón seleccionado por su categoría
+    const { contacts, fetchContacts } = UseContactsPermissionStore();
 
+    useEffect(() => {
+      fetchContacts(); // Fuerza cargar los contactos cuando se monta el modal
+    }, []);
+    
     return (
         <SafeLayout>
             {/*Boton de prueba*/}
@@ -88,9 +90,22 @@ export default function TestModal(){
             </Modal>
 
             {/*ModalScreen.tsx-> molecules -> Modal de prueba*/}
-            {/* <ModalScreen visible={listVisible}>
-                <ContacsListCard />
-            </ModalScreen> */}
+            <ModalScreen visible={listVisible} onClose={() => setListVisible(false)}>
+                <FlatList
+                    showsVerticalScrollIndicator={false}
+                    data={contacts}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => (
+                        <ContacsListCard
+                            contact={item as any}
+                            onPress={() => {
+                                console.log("Contacto seleccionado:", item.name);
+                                setListVisible(false);
+                            }}
+                        />
+                    )}
+                />
+            </ModalScreen> 
         </SafeLayout>
     )
 }

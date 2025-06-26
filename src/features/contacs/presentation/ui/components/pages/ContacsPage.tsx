@@ -8,6 +8,7 @@ import { UseContactsPermissionStore } from "../../../store/ContactsPermissionSto
 import { RootTabNavigation } from '@/shared/navigation/NavigatorTypes'; //Navegación tipada para acceder a cualquier vista desde componentes externos
 import AddRelationshipModal from '../molecules/AddRelationshipModal';
 import { ContactEntity } from "@/features/contacs/domain/entities/ContactEntity";
+import RelationshipFormModal from '../organisms/RelationshipFormModal';
 
 
 export default function ContacsPage () {
@@ -15,7 +16,8 @@ export default function ContacsPage () {
     const navigation = useNavigation<RootTabNavigation>();
     const appState = useRef(AppState.currentState);
     const [AddRelationship, setAddRelationship] = useState(false);
-     const [selectedContact, setSelectedContact] = useState<ContactEntity | null>(null);
+    const [selectedContact, setSelectedContact] = useState<ContactEntity | null>(null);
+    const [showFormModal, setShowFormModal] = useState(false);
     
     // Detecta si la app vuelve del background (ej: después de abrir Configuración)
     useEffect(() => {
@@ -85,11 +87,22 @@ export default function ContacsPage () {
                 )}
             </ContacsTemplate>
 
-            {/*Modal que se abrira al seleccionar un contacto para proceder a crear la relación */}
+            {/*Modal que se abre al seleccionar un contacto para indicarle si desea crear una relación */}
             <AddRelationshipModal 
                 visible={AddRelationship} 
                 onClose={() => setAddRelationship(false)} 
                 contact={selectedContact} //Pasas el contacto seleccionado
+                onCreateRelationship={() => {
+                    setAddRelationship(false); // Cierra modal actual
+                    setShowFormModal(true);    // Abre modal de formulario
+                }}
+            />
+
+            {/*Modal del formulario que crea la relación del contacto */}
+            <RelationshipFormModal
+                visible={showFormModal} 
+                contact={selectedContact} //Pasas el contacto seleccionado
+                onClose={() => setShowFormModal(false)} 
             />
         </View>
     );

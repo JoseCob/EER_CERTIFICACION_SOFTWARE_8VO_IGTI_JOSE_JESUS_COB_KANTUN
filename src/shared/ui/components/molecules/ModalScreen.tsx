@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     },
     textCancel:{
         color: 'rgba(78, 76, 76, 0.78)',
-        fontSize: 18,
+        fontSize: 16,
+        fontWeight:'500',
     },
 })

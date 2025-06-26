@@ -28,7 +28,9 @@ export default function ContacsListCard ({ contact, onPress  }: Props) {
                         </View>
                     )}
                     {/* Aqui va el Primer y segundo Nombre del contacto */}
-                    <Text style={styles.texContact}>{contact.name}</Text>
+                    <View style={{width:'72%'}}>
+                        <Text style={styles.texContact}>{contact.name}</Text>
+                    </View>
                 </View>
             )} 
         </Pressable>

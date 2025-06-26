@@ -11,7 +11,7 @@ export class ContactsDataSource {
         }
         
         const { data } = await Contacts.getContactsAsync({
-            fields: [Contacts.Fields.Name, Contacts.Fields.Image],
+            fields: [Contacts.Fields.Name, Contacts.Fields.Image, Contacts.Fields.PhoneNumbers],
         });
 
         return data.filter(c => c.name?.trim().length > 0);

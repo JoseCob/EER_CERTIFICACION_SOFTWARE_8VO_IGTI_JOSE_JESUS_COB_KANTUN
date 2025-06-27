@@ -7,11 +7,11 @@
 4. SQLite
 5. Zustand
 6. React Navigation
-7. react native circular progress
-8. react native svg
-### -- Puede que se implemente --
-9. axios
-10. Advice Slip JSON API: https://api.adviceslip.com
+7. expo-status-bar
+8. react native circular progress
+9. react native svg
+10. react-native-calendars
+11. date-fns-tz
 
 ## -- DEPENDENCIAS UTILIZADAS EN ESTE PROYECTO -- 
 1. Dependencia necesaria para navegación nativa
@@ -26,33 +26,37 @@
 > Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
 - _`npx expo install @react-navigation/bottom-tabs`_
 
-4. Dependencia necesaria para consumir las APIS
-> Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
-- _`npx expo install axios`_
-
-5. Dependencia necesaria para consumir la librería de contactos
+4. Dependencia necesaria para consumir la librería de contactos
 > Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
 - _`npx expo install expo-contacts`_
 
-6. Dependencia necesaria para consumir la librería de calendario
+5. Dependencia necesaria para consumir la librería de calendario
 > Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
 - _`npx expo install expo-calendar`_
 
-7. Dependencia necesaria para consumir la librería de notificaciones push
+6. Dependencia necesaria para consumir la librería de notificaciones push
 > Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
 - _`npx expo install expo-notifications`_
 
-8. Dependencia necesaria para guardar datos localmente en una base de datos SQL por "SQLite"
+7. Dependencia necesaria para guardar datos localmente en una base de datos SQL por "SQLite"
 > Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
 - _`npx expo install expo-sqlite`_
 
-9. Dependencia necesaria para el manejo de estado global
+8. Dependencia necesaria para el manejo de estado global
 > Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
 - _`npm install Zustand`_
 
-10. Dependencia necesaria para crear la gráfica circular de progreso tipo anillo
+9. Dependencia necesaria para crear la gráfica circular de progreso tipo anillo
 > Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
 - _`npx expo install react-native-svg react-native-circular-progress`_
+
+10. Dependencia necesaria que Permite la visualización de calendarios mensuales, semanales o diarios, con la posibilidad de resaltar fechas específicas. 
+> Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
+- _`npx expo install react-native-calendars`_
+
+11. Dependencia necesaria para facilita la manipulación y formato de fechas en diferentes zonas horarias, permitiendo a los desarrolladores trabajar con fechas locales y UTC. Es una extension de la biblioteca date-fns
+> Ejecuta el siguiente comando en la terminal con el directorio de la app, para una correcta instalacion exacta de la dependencia:
+- _`npm install date-fns-tz`_
 
 ## -- Instrucciones --
 ### Para usar todas estas dependencias en nuestro dispositivo, ejecute en la terminal estando ubicado en la ruta principal/raíz del archivo:

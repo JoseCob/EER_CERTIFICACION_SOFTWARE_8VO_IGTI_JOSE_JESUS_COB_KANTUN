@@ -9,7 +9,7 @@ import { RootTabNavigation } from '@/shared/navigation/NavigatorTypes'; //Navega
 import AddRelationshipModal from '../molecules/AddRelationshipModal';
 import { ContactEntity } from "@/features/contacs/domain/entities/ContactEntity";
 import RelationshipFormModal from '../organisms/RelationshipFormModal';
-
+import CalendarModal from '@/shared/ui/components/organisms/CalendarModal';
 
 export default function ContacsPage () {
     const { contacts, loading, permissionDenied, fetchContacts   } = UseContactsPermissionStore();
@@ -18,6 +18,10 @@ export default function ContacsPage () {
     const [AddRelationship, setAddRelationship] = useState(false);
     const [selectedContact, setSelectedContact] = useState<ContactEntity | null>(null);
     const [showFormModal, setShowFormModal] = useState(false);
+    const [lastInteraction, setLastInteraction] = useState<string | null>(null);
+    const [showCalendarModal, setShowCalendarModal] = useState(false);
+    const [lastInteractionDate, setLastInteractionDate] = useState<Date | null>(null); //Selección de la fecha en el modal del calendario
+    const [shouldPersistDateSelection, setShouldPersistDateSelection] = useState(false); //Mantiene la fecha seleccionada por el modal del calendario
     
     // Detecta si la app vuelve del background (ej: después de abrir Configuración)
     useEffect(() => {
@@ -102,7 +106,36 @@ export default function ContacsPage () {
             <RelationshipFormModal
                 visible={showFormModal} 
                 contact={selectedContact} //Pasas el contacto seleccionado
-                onClose={() => setShowFormModal(false)} 
+                onClose={() => setShowFormModal(false)}
+                onCalendarModal={() => {
+                    //setShowFormModal(true); // Mantiene el modal actual
+                    setShowCalendarModal(true);    // Abre modal de calendario
+                }} 
+                lastInteraction={lastInteraction}
+                setLastInteraction={setLastInteraction}
+                lastInteractionDate={lastInteractionDate}
+                setLastInteractionDate={setLastInteractionDate}
+                shouldPersistDateSelection={shouldPersistDateSelection}
+                setShouldPersistDateSelection={setShouldPersistDateSelection}
+            />
+
+            {/*Modal del calendario del formulario*/}
+            <CalendarModal 
+                visible={showCalendarModal} 
+                onClose={() => {
+                    setShowCalendarModal(false);
+                    //Si la última selección fue "ellipsis1", limpia el estado
+                    if (lastInteraction === "ellipsis1") {
+                      setLastInteraction(null);
+                    }
+                }}
+                onConfirm={(selectedDate) => {
+                    setLastInteractionDate(selectedDate); //Actualiza la fecha
+                    setShowCalendarModal(false);
+                }}
+                defaultDate={lastInteractionDate || new Date()}
+                shouldPersistDateSelection={shouldPersistDateSelection}
+                setShouldPersistDateSelection={setShouldPersistDateSelection}
             />
         </View>
     );

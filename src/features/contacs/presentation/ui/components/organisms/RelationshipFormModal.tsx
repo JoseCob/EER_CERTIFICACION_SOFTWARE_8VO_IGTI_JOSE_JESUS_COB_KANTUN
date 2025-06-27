@@ -1,12 +1,14 @@
 //Formulario para crear relaciones de los contactos
-import React from "react";
-import { StyleSheet, View, Text, Modal, Pressable, ScrollView, Image, TouchableOpacity } from "react-native";
+import React,{useState, useEffect} from "react";
+import { StyleSheet, View, Text, Modal, Pressable, ScrollView, Image, TouchableOpacity, TextInput } from "react-native";
 import { spacing, typography, colors } from "@/shared/theme";
 import { ContactEntity } from "@/features/contacs/domain/entities/ContactEntity";
 import { GetContactInitials } from "@/shared/utils/GetContactInitials";
-import MaterialIcons from '@expo/vector-icons/MaterialIcons'; //Icono para interacciones y Tiempo
+import MaterialIcons from '@expo/vector-icons/MaterialIcons'; //Icono para interacciones e información familiar
 import AntDesign from '@expo/vector-icons/AntDesign'; //Icono para ver más del contenido
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5'; //Icono para calendario
+import Ionicons from '@expo/vector-icons/Ionicons'; //Icono para etiquetas y notas
+import { format } from "date-fns-tz";
+import { es } from "date-fns/locale";
 
 //props para el modal
 interface FormModalProps {
@@ -15,9 +17,71 @@ interface FormModalProps {
     /* Contenido que irá dentro del modal */
     onClose: () => void; // para cerrar/abrir el modal
     contact: ContactEntity | null; //Entidades de los datos del contacto
+    onCalendarModal: () => void; //para abrir el modal de calendario
+    lastInteraction: string | null;
+    setLastInteraction: React.Dispatch<React.SetStateAction<string | null>>;
+    lastInteractionDate: Date | null;
+    setLastInteractionDate: React.Dispatch<React.SetStateAction<Date | null>>;
+    shouldPersistDateSelection: boolean;
+    setShouldPersistDateSelection: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const RelationshipFormModal:React.FC<FormModalProps> = ({ visible, onClose, contact }) => {
+const RelationshipFormModal:React.FC<FormModalProps> = ({ visible, onClose, contact, onCalendarModal, lastInteraction, setLastInteraction, lastInteractionDate, setLastInteractionDate, shouldPersistDateSelection, setShouldPersistDateSelection }) => {    
+    const [selectedInteractionType, setSelectedInteractionType] = useState("Llamada");
+    const [selectedTags, setSelectedTags] = useState<string[]>([]); //Sirve para mantener multiples opciones activas, en este caso para el campo de etiquetas
+
+    const isEllipsisSelected = () => {
+        return lastInteraction === "ellipsis1" || shouldPersistDateSelection;
+    };
+
+    //Calculamos las fecha del primer campo del formulario
+    const calculateDate = (type: string): Date => {
+        const now = new Date();
+        now.setHours(0, 0, 0, 0); // quita la hora para evitar confusiones
+
+        switch (type) {
+            case "Hoy":
+                return now;
+            case "Ayer":
+                return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+            case "Hace una semana":
+                return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+            case "Hace un mes":
+                return new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+            default:
+                return now;
+        }
+    };
+
+    //Carga siempre la categoria Llamada del campo oculto de la primera pregunta del formulario
+    useEffect(() => {
+        if ((lastInteraction || shouldPersistDateSelection)) {
+            setSelectedInteractionType("Llamada");
+        }
+    }, [lastInteraction, shouldPersistDateSelection]);
+
+    //Reinicia el formulario cada vez que se abre o es visible
+    useEffect(() => {
+        if (visible) {
+            // Reinicia el formulario
+            setSelectedInteractionType("Llamada");
+            setSelectedTags([]);
+            setLastInteraction(null);
+            setLastInteractionDate(null);
+            setShouldPersistDateSelection(false);
+        }
+    }, [visible]);
+
+    const toggleTag = (tag: string) => {
+        if (selectedTags.includes(tag)) {
+            // Quita la etiqueta si ya está seleccionada
+            setSelectedTags(selectedTags.filter((t) => t !== tag));
+        } else {
+            // Agrega la etiqueta
+            setSelectedTags([...selectedTags, tag]);
+        }
+    };
+
     return (
         <Modal
             animationType="slide"
@@ -33,12 +97,12 @@ const RelationshipFormModal:React.FC<FormModalProps> = ({ visible, onClose, cont
                 </Pressable>
                 <Text style={styles.titleText}>Nueva relación</Text>
                 <Pressable onPress={()=> {
-                    console.log("Botón añadir relación");
+                    console.log("Botón guardar relación");
                 }}>
                     <Text style={styles.textAdd}>Añadir</Text>
                 </Pressable>
             </View>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 {contact && (
                     <View style={styles.contactInfo}>
                         {/*Imagen del contacto*/}
@@ -61,6 +125,7 @@ const RelationshipFormModal:React.FC<FormModalProps> = ({ visible, onClose, cont
                         </View>
                     </View>
                 )}
+                {/*Campo de la primera pregunta*/}
                 <View style={styles.formBox}>
                     <View style={styles.textContainer}>
                         <MaterialIcons name="wechat" style={styles.styleIcon} />
@@ -71,52 +136,238 @@ const RelationshipFormModal:React.FC<FormModalProps> = ({ visible, onClose, cont
                       showsHorizontalScrollIndicator={false} 
                       contentContainerStyle={styles.btnContainer}
                     >
-                        <TouchableOpacity style={styles.resultBtn}>
-                            <Text style={styles.resultText}>Hoy</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.resultBtn}>
-                            <Text style={styles.resultText}>Ayer</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.resultBtn}>
-                            <Text style={styles.resultText}>Hace una semana</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.resultBtn}>
-                            <Text style={styles.resultText}>Hace un mes</Text>
+                        <TouchableOpacity 
+                            style={[
+                                styles.resultBtn,
+                                lastInteraction === "Hoy" && styles.resultBtnActive
+                            ]}
+                            onPress={() => {
+                                const isSelected = lastInteraction === "Hoy";
+                                setLastInteraction(isSelected ? null : "Hoy");
+                                setLastInteractionDate(isSelected ? null : calculateDate("Hoy"));
+                                setShouldPersistDateSelection(false); //Desactiva el estilo del ellipsis1 si esta activo
+                            }}
+                            
+                        >
+                            <Text style={[styles.resultText, lastInteraction === "Hoy" && {color: colors.surface}]}>Hoy</Text>
                         </TouchableOpacity>
                         <TouchableOpacity 
-                            style={styles.resultBtn}
-                            onPress={()=> console.log("Botón, abrir calendario")}
+                            style={[
+                                styles.resultBtn,
+                                lastInteraction === "Ayer" && styles.resultBtnActive
+                            ]}
+                            onPress={() => {
+                                const isSelected = lastInteraction === "Ayer";
+                                setLastInteraction(isSelected ? null : "Ayer");
+                                setLastInteractionDate(isSelected ? null : calculateDate("Ayer"));
+                                setShouldPersistDateSelection(false); //Desactiva el estilo del ellipsis1 si esta activo
+                            }}
                         >
-                            <AntDesign name="ellipsis1" style={styles.resultText} />
+                            <Text style={[styles.resultText, lastInteraction === "Ayer" && {color: colors.surface}]}>Ayer</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity 
+                            style={[
+                                styles.resultBtn,
+                                lastInteraction === "Hace una semana" && styles.resultBtnActive
+                            ]}
+                            onPress={() => {
+                                const isSelected = lastInteraction === "Hace una semana";
+                                setLastInteraction(isSelected ? null : "Hace una semana");
+                                setLastInteractionDate(isSelected ? null : calculateDate("Hace una semana"));
+                                setShouldPersistDateSelection(false); //Desactiva el estilo del ellipsis1 si esta activo
+                            }}
+                        >
+                            <Text style={[styles.resultText, lastInteraction === "Hace una semana" && {color: colors.surface}]}>Hace una semana</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity 
+                            style={[
+                                styles.resultBtn,
+                                lastInteraction === "Hace un mes" && styles.resultBtnActive
+                            ]}
+                            onPress={() => {
+                                const isSelected = lastInteraction === "Hace un mes";
+                                setLastInteraction(isSelected ? null : "Hace un mes");
+                                setLastInteractionDate(isSelected ? null : calculateDate("Hace un mes"));
+                                setShouldPersistDateSelection(false); //Desactiva el estilo del ellipsis1 si esta activo
+                            }}
+                        >
+                            <Text style={[styles.resultText, lastInteraction === "Hace un mes" && {color: colors.surface}]}>Hace un mes</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity 
+                            style={[
+                                styles.resultBtn,
+                                isEllipsisSelected() && styles.resultBtnActive
+                            ]}
+                            onPress={()=> {
+                                console.log("Botón mostrar calendario");
+                                setLastInteraction("ellipsis1");
+                                onCalendarModal();
+                            }}
+                        >
+                            <AntDesign name="ellipsis1" style={[styles.resultText, isEllipsisSelected() && { color: colors.surface }]} />
                         </TouchableOpacity>
                     </ScrollView>
+                    {/*Contenido que se mantendra oculta hasta que el usuario seleccione alguna opción de la pregunta anterior */}
+                    {(lastInteraction || shouldPersistDateSelection) && (
+                        <View>
+                            <View style={{flexDirection:'row', gap: spacing.xs, marginLeft: spacing.lg,}}>
+                                <Text>Entonces, hablaron el</Text>
+                                {/*Aqui se mostrala la fecha seleccionada por el usuario*/}
+                                <TouchableOpacity
+                                    onPress={()=> {
+                                        console.log("Botón, mostrar calendario");
+                                        setLastInteraction("ellipsis1"); // importante para mantener estilo activo
+                                        onCalendarModal(); // abre el modal
+                                    }}
+                                >
+                                    <Text style={{color: colors.backgroundApp}}>
+                                        {lastInteractionDate ? format(lastInteractionDate, "d 'de' MMMM 'de' yyyy", { locale: es }) : "Sin fecha"}
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                            <ScrollView 
+                              horizontal 
+                              showsHorizontalScrollIndicator={false} 
+                              contentContainerStyle={styles.btnContainer}
+                            >
+                                <TouchableOpacity 
+                                    style={[
+                                        styles.resultBtn,
+                                        selectedInteractionType === "Llamada" && styles.resultBtnActive,
+                                    ]}
+                                    onPress={()=> {setSelectedInteractionType("Llamada")}}
+                                >
+                                    <Text style={[styles.resultText, selectedInteractionType === "Llamada" && { color: colors.surface }]}>Llamada</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity 
+                                    style={[
+                                        styles.resultBtn,
+                                        selectedInteractionType === "Mensaje" && styles.resultBtnActive,
+                                    ]}
+                                    onPress={()=> {setSelectedInteractionType("Mensaje")}}
+                                >
+                                    <Text style={[styles.resultText, selectedInteractionType === "Mensaje" && { color: colors.surface }]}>Mensaje</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity 
+                                    style={[
+                                        styles.resultBtn,
+                                        selectedInteractionType === "Correo" && styles.resultBtnActive,
+                                    ]}
+                                    onPress={()=> {setSelectedInteractionType("Correo")}}
+                                >
+                                    <Text style={[styles.resultText, selectedInteractionType === "Correo" && { color: colors.surface }]}>Correo</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity 
+                                    style={[
+                                        styles.resultBtn,
+                                        selectedInteractionType === "Reunió en persona" && styles.resultBtnActive,
+                                    ]}
+                                    onPress={()=> {setSelectedInteractionType("Reunió en persona")}}
+                                >
+                                    <Text style={[styles.resultText, selectedInteractionType === "Reunió en persona" && { color: colors.surface }]}>Reunió en persona</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={[
+                                        styles.resultBtn,
+                                        selectedInteractionType === "Red social" && styles.resultBtnActive,
+                                    ]}
+                                    onPress={()=> {setSelectedInteractionType("Red social")}}
+                                >
+                                    <Text style={[styles.resultText, selectedInteractionType === "Red social" && { color: colors.surface }]}>Red social</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={[
+                                        styles.resultBtn,
+                                        selectedInteractionType === "Video llamada" && styles.resultBtnActive,
+                                    ]}
+                                    onPress={()=> {setSelectedInteractionType("Video llamada")}}
+                                >
+                                    <Text style={[styles.resultText, selectedInteractionType === "Video llamada" && { color: colors.surface }]}>Video llamada</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={[
+                                        styles.resultBtn,
+                                        selectedInteractionType === "Conferencia" && styles.resultBtnActive,
+                                    ]}
+                                    onPress={()=> {setSelectedInteractionType("Conferencia")}}
+                                >
+                                    <Text style={[styles.resultText, selectedInteractionType === "Conferencia" && { color: colors.surface }]}>Conferencia</Text>
+                                </TouchableOpacity>
+                            </ScrollView>
+                            <View style={{alignItems:'center'}}>
+                                <TextInput
+                                    style={styles.textArea}
+                                    multiline={true}
+                                    placeholder='¿Alguna nota importante?'
+                                />
+                            </View>
+                        </View>
+                    )}
                 </View>
                 <View style={styles.formSeparator}></View>
+
+                {/*Campo de la segunda pregunta*/}
                 <View style={styles.formBox}>
                     <View style={styles.textContainer}>
-                        <FontAwesome5 name="calendar-alt" style={styles.styleIcon} />
-                        <Text style={{fontSize: 17}}>Recordatorio para este contacto</Text>
+                        <Ionicons name="pricetag-sharp" style={styles.styleIcon} />
+                        <Text style={{fontSize: 17}}>¿Agregar etiqueta?</Text>
                     </View>
-                    <ScrollView 
-                      horizontal 
-                      showsHorizontalScrollIndicator={false} 
-                      contentContainerStyle={styles.btnContainer}
-                    >
-                        <TouchableOpacity style={styles.resultBtn}>
-                            <Text style={styles.resultText}>Esta semana</Text>
+                    <View style={styles.tagsContainer}>
+                        {[
+                            "Cliente", "Amigo", "Familia", "Socio", "Favorito", "Conocido",
+                            "Colaborador", "Reuniones", "Trabajo", "Mentor", "Subordinado", "Contacto frecuente"
+                        ].map((tag) => (
+                        <TouchableOpacity
+                            key={tag}
+                            style={[
+                                styles.resultBtn,
+                                selectedTags.includes(tag) && styles.resultBtnActive
+                            ]}
+                            onPress={() => toggleTag(tag)}
+                        >
+                            <Text 
+                                style={[
+                                    styles.resultText,
+                                    selectedTags.includes(tag) && { color: colors.surface }
+                                ]}
+                            >
+                                {tag}
+                            </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.resultBtn}>
-                            <Text style={styles.resultText}>cada mes</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.resultBtn}>
-                            <Text style={styles.resultText}>Cada 3 meses</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.resultBtn}>
-                            <Text style={styles.resultText}>No recordar</Text>
-                        </TouchableOpacity>
-                    </ScrollView>
+                      ))}
+                    </View>
                 </View>
                 <View style={styles.formSeparator}></View>
+
+                {/*Campo de la tercera pregunta*/}
+                <View style={styles.formBox}>
+                    <View style={styles.textContainer}>
+                        <Ionicons name="document-text" style={styles.styleIcon} />
+                        <Text style={{fontSize: 17}}>¿Añadir una nota general?</Text>
+                    </View>
+                    <View style={{alignItems:'center'}}>
+                        <TextInput
+                            style={styles.textArea}
+                            multiline={true}
+                            placeholder='Donde se conocieron, intereses, deportes, equipo, etc...'
+                        />
+                    </View>
+                </View>
+                <View style={styles.formSeparator}></View>
+                {/*Campo de la cuarta pregunta*/}
+                <View style={styles.formBox}>
+                    <View style={styles.textContainer}>
+                        <MaterialIcons name="family-restroom" style={styles.styleIcon} />
+                        <Text style={{fontSize: 17}}>¿Información familiar?</Text>
+                    </View>
+                    <View style={{alignItems:'center'}}>
+                        <TextInput
+                            style={styles.textArea}
+                            multiline={true}
+                            placeholder='Hijos, esposa, esposo, hermanos, etc...'
+                        />
+                    </View>
+                </View>
             </ScrollView>
         </Modal>
     );
@@ -188,7 +439,7 @@ const styles = StyleSheet.create({
     },
     formBox:{
         paddingLeft: spacing.md,
-        paddingTop: spacing.xl,
+        paddingTop: spacing.md,
         paddingRight: spacing.md,
         paddingBottom: spacing.xl,
     },
@@ -202,19 +453,46 @@ const styles = StyleSheet.create({
         fontSize: typography.fontSizeXL,
         color:colors.backgroundApp,
     },
+    textArea:{
+        width: '92%',
+        textAlignVertical: 'top',
+        height: 80,
+        fontSize: 18,
+        marginTop: spacing.sm,
+        marginLeft: spacing.lg,
+        marginRight: spacing.lg,
+        paddingLeft: spacing.lg,
+        paddingRight: spacing.lg,
+        borderColor: 'rgba(153, 149, 149, 0.53)',
+        borderWidth: 1,
+        borderRadius: spacing.sm,
+    },
     btnContainer:{
         flexDirection: 'row',
         alignItems: 'center',
         gap: spacing.sm,
-        marginTop: 16,
+        marginTop: spacing.lg,
         overflow: 'hidden',
+    },
+    tagsContainer:{
+        flexDirection:'row',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        gap: spacing.xs,
+        marginTop: spacing.lg,
     },
     resultBtn:{
         borderWidth: 2,
         borderRadius: 80,
-        padding: 8,
-        marginLeft: 16,
+        padding: spacing.sm,
+        marginLeft: spacing.lg,
+        marginBottom: spacing.md,
         borderColor:'rgba(153, 149, 149, 0.53)',
+    },
+    //Estilo del boton activo
+    resultBtnActive:{
+        borderColor: colors.backgroundApp,
+        backgroundColor: colors.backgroundApp,
     },
     resultText:{
         fontSize: typography.fontSizeM,
@@ -222,7 +500,7 @@ const styles = StyleSheet.create({
         fontWeight: '400',
     },
     formSeparator:{
-        height: spacing.lg,
-        backgroundColor: '#d8d7d7',
+        height: 20,
+        backgroundColor: '#F2F2F2',
     },
 })

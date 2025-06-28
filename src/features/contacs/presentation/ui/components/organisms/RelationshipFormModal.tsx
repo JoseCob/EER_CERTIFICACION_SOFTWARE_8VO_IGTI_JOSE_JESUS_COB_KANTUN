@@ -1,14 +1,18 @@
 //Formulario para crear relaciones de los contactos
 import React,{useState, useEffect} from "react";
-import { StyleSheet, View, Text, Modal, Pressable, ScrollView, Image, TouchableOpacity, TextInput } from "react-native";
+import { StyleSheet, View, Text, Modal, Pressable, ScrollView, Image, TouchableOpacity, TextInput, Alert } from "react-native";
 import { spacing, typography, colors } from "@/shared/theme";
-import { ContactEntity } from "@/features/contacs/domain/entities/ContactEntity";
-import { GetContactInitials } from "@/shared/utils/GetContactInitials";
+import { ContactEntity } from "@/features/contacs/domain/entities/ContactEntity"; //Obtiene los datos de la entidad de contactos
+import { GetContactInitials } from "@/shared/utils/GetContactInitials"; //Obtiene las iniciales del contacto en el perfil
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'; //Icono para interacciones e información familiar
 import AntDesign from '@expo/vector-icons/AntDesign'; //Icono para ver más del contenido
 import Ionicons from '@expo/vector-icons/Ionicons'; //Icono para etiquetas y notas
+//Librerias utilizadas para dar formato de la fecha por date-fns-tz
 import { format } from "date-fns-tz";
 import { es } from "date-fns/locale";
+//Libreria que obtiene la tabla de relaciones(relationships) de nuestra base de datos
+import { insertRelationship } from "@/core/database/migrations/tables/RelationshipDB";
+import { useContactsWithRelationStore } from "../../../store/ContactsWithRelationStore";
 
 //props para el modal
 interface FormModalProps {
@@ -27,8 +31,12 @@ interface FormModalProps {
 }
 
 const RelationshipFormModal:React.FC<FormModalProps> = ({ visible, onClose, contact, onCalendarModal, lastInteraction, setLastInteraction, lastInteractionDate, setLastInteractionDate, shouldPersistDateSelection, setShouldPersistDateSelection }) => {    
-    const [selectedInteractionType, setSelectedInteractionType] = useState("Llamada");
+    const [selectedInteractionType, setSelectedInteractionType] = useState("Llamada"); //Inicializa siempre en Llamada el contenido oculto
     const [selectedTags, setSelectedTags] = useState<string[]>([]); //Sirve para mantener multiples opciones activas, en este caso para el campo de etiquetas
+    const [someNote, setSomeNote] = useState(""); //Se encarga de capturar el contenido en los TextInput -> Alguna nota importante
+    const [generalNote, setGeneralNote] = useState(""); //Se encarga de capturar el contenido en los TextInput -> Añadir una nota general
+    const [familyInfo, setFamilyInfo] = useState(""); //Se encarga de capturar el contenido en los TextInput -> Información familiar
+    const { fetchRelatedContacts } = useContactsWithRelationStore.getState();
 
     const isEllipsisSelected = () => {
         return lastInteraction === "ellipsis1" || shouldPersistDateSelection;
@@ -60,7 +68,7 @@ const RelationshipFormModal:React.FC<FormModalProps> = ({ visible, onClose, cont
         }
     }, [lastInteraction, shouldPersistDateSelection]);
 
-    //Reinicia el formulario cada vez que se abre o es visible
+    //Reinicia los campos del formulario cada vez que es visible el modal
     useEffect(() => {
         if (visible) {
             // Reinicia el formulario
@@ -69,6 +77,9 @@ const RelationshipFormModal:React.FC<FormModalProps> = ({ visible, onClose, cont
             setLastInteraction(null);
             setLastInteractionDate(null);
             setShouldPersistDateSelection(false);
+            setSomeNote("");
+            setGeneralNote("");
+            setFamilyInfo("");
         }
     }, [visible]);
 
@@ -96,8 +107,29 @@ const RelationshipFormModal:React.FC<FormModalProps> = ({ visible, onClose, cont
                     <Text style={styles.textCancel}>Cancelar</Text>
                 </Pressable>
                 <Text style={styles.titleText}>Nueva relación</Text>
-                <Pressable onPress={()=> {
-                    console.log("Botón guardar relación");
+                <Pressable onPress={async () => {
+                    if (contact) {
+                        try {
+                            const date = lastInteractionDate ? lastInteractionDate.toISOString() : "";
+                            await insertRelationship(
+                              contact.id,
+                              contact.name,
+                              date,
+                              selectedInteractionType,
+                              someNote,
+                              selectedTags,
+                              generalNote,
+                              familyInfo
+                            );
+                            useContactsWithRelationStore.getState().fetchRelatedContacts(); //Almacena en tiempo real con zustand
+                            console.log("Relación guardada por SQLite al usuario:", contact.name);
+                            onClose(); // Cierra el modal al guardar
+                        } catch (error: any) {
+                            if (error.message.includes("UNIQUE constraint failed")){
+                                console.log("No se pudo guardar en SQLite porque ya existe");
+                            }
+                        }
+                    }
                 }}>
                     <Text style={styles.textAdd}>Añadir</Text>
                 </Pressable>
@@ -299,6 +331,8 @@ const RelationshipFormModal:React.FC<FormModalProps> = ({ visible, onClose, cont
                                     style={styles.textArea}
                                     multiline={true}
                                     placeholder='¿Alguna nota importante?'
+                                    value={someNote}
+                                    onChangeText={setSomeNote}
                                 />
                             </View>
                         </View>
@@ -350,6 +384,8 @@ const RelationshipFormModal:React.FC<FormModalProps> = ({ visible, onClose, cont
                             style={styles.textArea}
                             multiline={true}
                             placeholder='Donde se conocieron, intereses, deportes, equipo, etc...'
+                            value={generalNote}
+                            onChangeText={setGeneralNote}
                         />
                     </View>
                 </View>
@@ -365,6 +401,8 @@ const RelationshipFormModal:React.FC<FormModalProps> = ({ visible, onClose, cont
                             style={styles.textArea}
                             multiline={true}
                             placeholder='Hijos, esposa, esposo, hermanos, etc...'
+                            value={familyInfo}
+                            onChangeText={setFamilyInfo}
                         />
                     </View>
                 </View>

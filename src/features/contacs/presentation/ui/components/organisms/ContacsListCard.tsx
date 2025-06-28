@@ -10,13 +10,18 @@ interface Props {
 }
 
 export default function ContacsListCard ({ contact, onPress  }: Props) {
+    const isDisabled = contact.isRelated === true;
+
     return (
         //Maqueta del diseño para la lista de contactos
-        <Pressable onPress={() => {onPress()}}>
+        <Pressable 
+            onPress={isDisabled ? undefined : () => onPress()}
+            disabled={isDisabled}
+        >
             {({ pressed }) => (
-                <View style={[styles.btnAddContact, pressed && styles.pressedContact]}>
+                <View style={[styles.btnAddContact, pressed && !isDisabled && styles.pressedContact, isDisabled && styles.disabledContact]}>
                     {/* Aqui va el icono/imagen del contacto */}
-                    {contact.image && contact.image ? (
+                    {contact.image ? (
                         <Image
                             source={{ uri: contact.image }}
                             style={styles.contactIcon}
@@ -66,4 +71,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: typography.fontSizeXL,
     },
+
+    //Contacto deshabilitado 
+    disabledContact: {
+        backgroundColor: "#e0e0e0",
+        opacity: 0.5,
+    },
+
 })

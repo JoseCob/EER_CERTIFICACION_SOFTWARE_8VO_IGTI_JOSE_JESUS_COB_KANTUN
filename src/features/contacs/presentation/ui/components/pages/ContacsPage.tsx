@@ -10,9 +10,11 @@ import AddRelationshipModal from '../molecules/AddRelationshipModal';
 import { ContactEntity } from "@/features/contacs/domain/entities/ContactEntity";
 import RelationshipFormModal from '../organisms/RelationshipFormModal';
 import CalendarModal from '@/shared/ui/components/organisms/CalendarModal';
+import { ContactsWithRelationRepository } from "@/features/contacs/data/repositories/ContactsWithRelationRepositoryImpl";
+import { useContactsWithRelationStore } from '../../../store/ContactsWithRelationStore';
 
 export default function ContacsPage () {
-    const { contacts, loading, permissionDenied, fetchContacts   } = UseContactsPermissionStore();
+    const { loading, permissionDenied, fetchContacts } = UseContactsPermissionStore(); //Estado global
     const navigation = useNavigation<RootTabNavigation>();
     const appState = useRef(AppState.currentState);
     const [AddRelationship, setAddRelationship] = useState(false);
@@ -22,7 +24,15 @@ export default function ContacsPage () {
     const [showCalendarModal, setShowCalendarModal] = useState(false);
     const [lastInteractionDate, setLastInteractionDate] = useState<Date | null>(null); //Selección de la fecha en el modal del calendario
     const [shouldPersistDateSelection, setShouldPersistDateSelection] = useState(false); //Mantiene la fecha seleccionada por el modal del calendario
-    
+    const { relatedContacts, fetchRelatedContacts } = useContactsWithRelationStore(); //Esto indica contactos ya creados como relación con zustand
+
+    //Ordena los contactos en relacionados y no relacionados. Le pasamos la constante "contactsWithRelation" que contiene los contactos con relación y los deshabilita
+    const sortedContacts = [...relatedContacts].sort((a, b) => {
+        const aRelated = a.isRelated ? 1 : 0;
+        const bRelated = b.isRelated ? 1 : 0;
+        return aRelated - bRelated; // No relacionados primero
+    });
+
     // Detecta si la app vuelve del background (ej: después de abrir Configuración)
     useEffect(() => {
         const subscription = AppState.addEventListener('change', async (nextAppState: AppStateStatus) => {
@@ -66,9 +76,13 @@ export default function ContacsPage () {
             check();
         }, [navigation])
     );
-
     // Si ya fue redirigido, no renderizar esta vista
     if (permissionDenied) return null;
+
+    //Me indica cuales son los contactos creados con una relación
+    useEffect(() => {
+        fetchRelatedContacts();
+    }, []);
 
     return (
         <View style={{ flex: 1 }}>
@@ -81,8 +95,9 @@ export default function ContacsPage () {
                     <ActivityIndicator size="large" color={"blue"} style={{ flex:1 }}/>
                 ) : (
                   <ContacsListTemplate
-                    contacts={contacts}
+                    contacts={sortedContacts}
                     onSelectContact={(contact) => {
+                        if (contact.isRelated) return; // Desactiva si ya está relacionado
                         console.log("Contacto seleccionado:", contact.name)
                         setSelectedContact(contact); // Guarda el contacto seleccionado
                         setAddRelationship(true); // Muestra modal de crear relación
@@ -98,7 +113,7 @@ export default function ContacsPage () {
                 contact={selectedContact} //Pasas el contacto seleccionado
                 onCreateRelationship={() => {
                     setAddRelationship(false); // Cierra modal actual
-                    setShowFormModal(true);    // Abre modal de formulario
+                    setShowFormModal(true); // Abre modal de formulario
                 }}
             />
 
@@ -108,8 +123,7 @@ export default function ContacsPage () {
                 contact={selectedContact} //Pasas el contacto seleccionado
                 onClose={() => setShowFormModal(false)}
                 onCalendarModal={() => {
-                    //setShowFormModal(true); // Mantiene el modal actual
-                    setShowCalendarModal(true);    // Abre modal de calendario
+                    setShowCalendarModal(true); // Abre modal de calendario
                 }} 
                 lastInteraction={lastInteraction}
                 setLastInteraction={setLastInteraction}

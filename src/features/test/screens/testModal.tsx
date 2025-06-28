@@ -8,17 +8,19 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'; //Icono para inter
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5'; // Icono para calendario
 import ContacsListCard from "@/features/contacs/presentation/ui/components/organisms/ContacsListCard";
 import ModalScreen from "@/shared/ui/components/molecules/ModalScreen";
-import { UseContactsPermissionStore } from "@/features/contacs/presentation/store/ContactsPermissionStore";
+import { useContactsWithRelationStore } from "@/features/contacs/presentation/store/ContactsWithRelationStore"; //Cargamos los contactos relacionados con zustand
 
 export default function TestModal(){
     const [modalVisible, setModalVisible] = useState(false); //para mostrar el modal de añadir notas
     const [listVisible, setListVisible] = useState(false); //muestra el modal de la lista de contactos
     const [activeForm, setActiveForm] = useState<'note' | 'interaction' | 'reminder'>('note'); //Activa el estilo del botón seleccionado por su categoría
-    const { contacts, fetchContacts } = UseContactsPermissionStore();
+    const { relatedContacts, fetchRelatedContacts } = useContactsWithRelationStore();
 
     useEffect(() => {
-      fetchContacts(); // Fuerza cargar los contactos cuando se monta el modal
-    }, []);
+        if (listVisible) {
+            fetchRelatedContacts(); // Cargar los contactos relacionados cuando se monta el modal
+        }
+    }, [listVisible])
     
     return (
         <SafeLayout>
@@ -93,7 +95,7 @@ export default function TestModal(){
             <ModalScreen visible={listVisible} onClose={() => setListVisible(false)}>
                 <FlatList
                     showsVerticalScrollIndicator={false}
-                    data={contacts}
+                    data={relatedContacts}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
                         <ContacsListCard
@@ -104,6 +106,11 @@ export default function TestModal(){
                             }}
                         />
                     )}
+                    ListEmptyComponent = {
+                        <Text style={{ textAlign: 'center', marginTop: 40, fontSize: 16, color: '#666' }}>
+                            No se encontraron contactos relacionados, agrega relaciones para empezar a crear conexiones importantes
+                        </Text>
+                    }
                 />
             </ModalScreen> 
         </SafeLayout>

@@ -10,7 +10,6 @@ import AddRelationshipModal from '../molecules/AddRelationshipModal';
 import { ContactEntity } from "@/features/contacs/domain/entities/ContactEntity";
 import RelationshipFormModal from '../organisms/RelationshipFormModal';
 import CalendarModal from '@/shared/ui/components/organisms/CalendarModal';
-import { ContactsWithRelationRepository } from "@/features/contacs/data/repositories/ContactsWithRelationRepositoryImpl";
 import { useContactsWithRelationStore } from '../../../store/ContactsWithRelationStore';
 
 export default function ContacsPage () {

@@ -8,17 +8,17 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'; //Icono para inter
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5'; // Icono para calendario
 import ContacsListCard from "@/features/contacs/presentation/ui/components/organisms/ContacsListCard";
 import ModalScreen from "@/shared/ui/components/molecules/ModalScreen";
-import { useContactsWithRelationStore } from "@/features/contacs/presentation/store/ContactsWithRelationStore"; //Cargamos los contactos relacionados con zustand
+import { useOnlyRelatedContactsStore } from "@/features/contacs/presentation/store/ContactsWithRelationStore"; //Cargamos los contactos relacionados con zustand
 
 export default function TestModal(){
     const [modalVisible, setModalVisible] = useState(false); //para mostrar el modal de añadir notas
     const [listVisible, setListVisible] = useState(false); //muestra el modal de la lista de contactos
     const [activeForm, setActiveForm] = useState<'note' | 'interaction' | 'reminder'>('note'); //Activa el estilo del botón seleccionado por su categoría
-    const { relatedContacts, fetchRelatedContacts } = useContactsWithRelationStore();
+    const { onlyRelatedContacts, fetchOnlyRelatedContacts } = useOnlyRelatedContactsStore();
 
     useEffect(() => {
         if (listVisible) {
-            fetchRelatedContacts(); // Cargar los contactos relacionados cuando se monta el modal
+            fetchOnlyRelatedContacts(); // Cargar los contactos relacionados cuando se monta el modal
         }
     }, [listVisible])
     
@@ -95,11 +95,12 @@ export default function TestModal(){
             <ModalScreen visible={listVisible} onClose={() => setListVisible(false)}>
                 <FlatList
                     showsVerticalScrollIndicator={false}
-                    data={relatedContacts}
+                    data={onlyRelatedContacts}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
                         <ContacsListCard
-                            contact={item as any}
+                            contact={item}
+                            allowPressOnRelated={true} // Permite clic al contacto aunque tenga relación
                             onPress={() => {
                                 console.log("Contacto seleccionado:", item.name);
                                 setListVisible(false);

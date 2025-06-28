@@ -7,19 +7,20 @@ import { ContactEntity } from '@/features/contacs/domain/entities/ContactEntity'
 interface Props {
     contact: ContactEntity;
     onPress: () => void;
+    allowPressOnRelated?: boolean; //Si es "true", ignora si está relacionado o no el contacto
 }
 
-export default function ContacsListCard ({ contact, onPress  }: Props) {
+export default function ContacsListCard ({ contact, onPress, allowPressOnRelated }: Props) {
     const isDisabled = contact.isRelated === true;
 
     return (
         //Maqueta del diseño para la lista de contactos
         <Pressable 
-            onPress={isDisabled ? undefined : () => onPress()}
-            disabled={isDisabled}
+            onPress={onPress}
+            disabled={contact.isRelated && !allowPressOnRelated}
         >
             {({ pressed }) => (
-                <View style={[styles.btnAddContact, pressed && !isDisabled && styles.pressedContact, isDisabled && styles.disabledContact]}>
+                <View style={[styles.btnAddContact, pressed && !isDisabled && styles.pressedContact, isDisabled && !allowPressOnRelated && styles.disabledContact]}>
                     {/* Aqui va el icono/imagen del contacto */}
                     {contact.image ? (
                         <Image

@@ -93,4 +93,27 @@
   <img src="https://github.com/user-attachments/assets/31784924-1b08-4004-9498-149573e7b692"/>
 </p>
 
-## -- Imágenes del proyecto en móvil --
+## -- Imágenes del dashboard --
+<p align="center">
+  <img src="https://github.com/JoseCob/EER_CERTIFICACION_SOFTWARE_8VO_IGTI_JOSE_JESUS_COB_KANTUN/blob/JoseCob-Imagenes-de-prueba/Captura%20de%20pantalla%20(745).png?raw=true" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/JoseCob/EER_CERTIFICACION_SOFTWARE_8VO_IGTI_JOSE_JESUS_COB_KANTUN/blob/JoseCob-Imagenes-de-prueba/Captura%20de%20pantalla%20(746).png?raw=true" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/JoseCob/EER_CERTIFICACION_SOFTWARE_8VO_IGTI_JOSE_JESUS_COB_KANTUN/blob/JoseCob-Imagenes-de-prueba/Captura%20de%20pantalla%20(747).png?raw=true" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/JoseCob/EER_CERTIFICACION_SOFTWARE_8VO_IGTI_JOSE_JESUS_COB_KANTUN/blob/JoseCob-Imagenes-de-prueba/Captura%20de%20pantalla%20(748).png?raw=true" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/JoseCob/EER_CERTIFICACION_SOFTWARE_8VO_IGTI_JOSE_JESUS_COB_KANTUN/blob/JoseCob-Imagenes-de-prueba/Captura%20de%20pantalla%20(749).png?raw=true" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/JoseCob/EER_CERTIFICACION_SOFTWARE_8VO_IGTI_JOSE_JESUS_COB_KANTUN/blob/JoseCob-Imagenes-de-prueba/Captura%20de%20pantalla%20(751).png?raw=true" />
+</p>

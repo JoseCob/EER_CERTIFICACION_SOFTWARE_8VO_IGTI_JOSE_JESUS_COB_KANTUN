@@ -32,9 +32,8 @@
 
 ## -- Imagen de la estructura del proyecto --
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/31784924-1b08-4004-9498-149573e7b692"/>
+  <img src="https://drive.google.com/file/d/1EJh5QYTqgYY4r7mV9XE4zgfHox1B6WUl/view?usp=drive_link"/>
 </p>
-![](https://github.com/JoseCob/EER_CERTIFICACION_SOFTWARE_8VO_IGTI_JOSE_JESUS_COB_KANTUN/blob/JoseCob-Imagenes-de-prueba/Captura%20de%20pantalla%20(741).png)
 
 ## -- Tecnologías y Librerías que se utilizaron en la aplicación --
 1. expo-contacts

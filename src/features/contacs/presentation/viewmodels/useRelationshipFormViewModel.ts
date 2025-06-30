@@ -1,4 +1,3 @@
-// viewmodels/useRelationshipFormViewModel.ts
 import { useState, useEffect } from "react";
 import { RelationshipFormEntity } from "../../domain/entities/RelationshipFormEntity";
 

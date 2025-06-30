@@ -7,22 +7,69 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import ContacsListCard from "@/features/contacs/presentation/ui/components/organisms/ContacsListCard";
 import RelatedContactsModal from "@/shared/ui/components/pages/RelatedContactsModal";
 import { useOnlyRelatedContactsStore } from "@/features/contacs/presentation/store/ContactsWithRelationStore";
+import { ContactEntity } from "@/features/contacs/domain/entities/ContactEntity";
+import { InteractionSection } from "@/features/home/presentation/ui/components/organisms/InteractionSection";
+import { useRelationshipFormViewModel } from "@/features/contacs/presentation/viewmodels/useRelationshipFormViewModel";
 
 interface Props {
   visible: boolean;
   onClose: () => void;
+  onCalendarModal: () => void;
+  lastInteractionDate: Date | null;
+  setLastInteractionDate: React.Dispatch<React.SetStateAction<Date | null>>;
+  selectedInteractionDate: string | null;
+  setSelectedInteractionDate: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-export default function AddNoteModal({ visible, onClose }: Props) {
+const AddNoteModal: React.FC<Props> = ({ visible, onClose, onCalendarModal, lastInteractionDate, setLastInteractionDate, selectedInteractionDate, setSelectedInteractionDate}) => {
   const [listVisible, setListVisible] = useState(false);
   const [activeForm, setActiveForm] = useState<"note" | "interaction" | "reminder">("note");
+  const formTitles = { note: "Nueva nota", interaction: "Nueva interacción", reminder: "Nuevo recordatorio"}; //Para hacer titulos dinamicos de acuerdo a la opción activa
   const { onlyRelatedContacts, fetchOnlyRelatedContacts } = useOnlyRelatedContactsStore();
+  const [selectedInteractionType, setSelectedInteractionType] = useState<string | null>(null);
 
+  const [noteText, setNoteText] = useState(""); //Para agregarle valor al campo de Tu nota
+  
+  const hasInteractionSelection = selectedInteractionType !== null && selectedInteractionDate !== null;
+  const hasAnySelection = hasInteractionSelection;
+
+  const [selectedContact, setSelectedContact] = useState<ContactEntity | null>(null);
+  
+  //Validaciones para el botón guardar 
+  const isInteractionForm = activeForm === "interaction";
+  const isNoteForm = activeForm === "note";
+  const isReminderForm = activeForm === "reminder";
+
+  // Condiciones mínimas para activar "Guardar"
+  const isSaveEnabled = selectedContact !== null && (
+    (isInteractionForm && hasAnySelection) || isNoteForm || isReminderForm
+  );
+
+  const { calculateDate } = useRelationshipFormViewModel(visible);
+
+  //Carga los contactos solo relacionados
   useEffect(() => {
     if (listVisible) {
       fetchOnlyRelatedContacts();
     }
   }, [listVisible]);
+
+  //Limpia los campos relacionados con interacción cuando cambiamos de formulario
+  useEffect(() => {
+    setSelectedInteractionType(null);
+    setSelectedInteractionDate(null);
+  }, [activeForm]);
+
+  // Resetea todo al abrir el modal de nuevo
+  useEffect(() => {
+    if (visible) {
+      setActiveForm("note"); //Establece el modal en Nueva nota
+      setNoteText(""); //Limpia el TextInput de las notas
+      setSelectedContact(null); //Limpia la selección del contacto
+      setSelectedInteractionType(null); //Desmarca las opciones del tipo de interacción
+      setSelectedInteractionDate(null); //Desmarca las fechas del tipo de interacción
+    }
+  }, [visible]);
 
   return (
     <View>
@@ -37,66 +84,42 @@ export default function AddNoteModal({ visible, onClose }: Props) {
                 </Pressable>
               </View>
               <View style={styles.btnCenter}>
-                <Text style={styles.headerTitle}>Nueva Nota</Text>
+                <Text style={styles.headerTitle}>{formTitles[activeForm]}</Text>
               </View>
             </View>
 
             <View style={styles.modalContent}>
               <View style={styles.containerAddContact}>
                 <Pressable onPress={() => setListVisible(true)}>
-                  <Text style={styles.btnContactSelect}>Agregar contacto</Text>
+                  <Text style={[
+                    styles.btnContactSelect,
+                    selectedContact && { color: colors.backgroundApp, fontSize: typography.fontSizeL }
+                  ]}>
+                    {selectedContact ? selectedContact.name : "Agregar contacto"}
+                  </Text>
                 </Pressable>
               </View>
               <TextInput
                 style={styles.textArea}
                 multiline
                 placeholder="Tu nota"
+                value={noteText}
+                onChangeText={setNoteText}
+
               />
               {activeForm === "interaction" && (
-                <View style={{ width: "100%", marginTop: spacing.xs }}>
-                  <Text style={{ fontSize: typography.fontSizeM, fontWeight: "bold"}}>
-                    ¿Cómo se pusieron al día?
-                  </Text>
-                  {/* Tipos de interacción */}
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.btnContainer}>
-                      {["Llamada", "Mensaje", "Correo", "Reunión en persona", "Red social", "Videollamada", "Conferencia"].map((type) => (
-                        <Pressable
-                          key={type}
-                          style={{
-                            backgroundColor: "#f0f0f0",
-                            padding: 8,
-                            borderRadius: 8,
-                            marginRight: 8,
-                            marginBottom: 8
-                          }}
-                          onPress={() => console.log("Tipo de interacción:", type)}
-                        >
-                          <Text>{type}</Text>
-                        </Pressable>
-                      ))}
-                    </ScrollView>
-                  {/* Fechas predefinidas */}
-                  <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.btnContainer}>
-                    {["Hoy", "Ayer", "Hace una semana", "Hace un mes"].map((label) => (
-                      <Pressable
-                        key={label}
-                        style={{
-                          backgroundColor: "#f0f0f0",
-                          padding: 8,
-                          borderRadius: 80,
-                          marginRight: 8,
-                          marginBottom: 8
-                        }}
-                        onPress={() => console.log("Fecha seleccionada:", label)}
-                      >
-                        <Text>{label}</Text>
-                      </Pressable>
-                    ))}
-                  </ScrollView>
-                </View>
+                <InteractionSection
+                  selectedInteractionType={selectedInteractionType}
+                  setSelectedInteractionType={setSelectedInteractionType}
+                  selectedInteractionDate={selectedInteractionDate}
+                  setSelectedInteractionDate={setSelectedInteractionDate}
+                  lastInteractionDate={lastInteractionDate}
+                  setLastInteractionDate={setLastInteractionDate}
+                  onCalendarModal={onCalendarModal}
+                  calculateDate={calculateDate}
+                />
               )}
             </View>
-
             <View style={styles.modalFooter}>
               <View style={styles.btnIconLeft}>
                 {["note", "interaction", "reminder"].map((type) => {
@@ -113,18 +136,26 @@ export default function AddNoteModal({ visible, onClose }: Props) {
                       : type === "interaction"
                       ? "wechat"
                       : "calendar-alt";
+                  const isDisabled = hasAnySelection && !isActive;
                   return (
-                    <View key={type} style={[styles.btnIcon, isActive && styles.btnActive]}>
-                      <Pressable onPress={() => setActiveForm(type as any)}>
-                        <Icon name={iconName} style={[styles.styleIcon, isActive && { color: "white", fontSize: 26 }]} />
+                    <View key={type} style={[styles.btnIcon, isActive && styles.btnActive, isDisabled && { opacity: 0.3 }]}>
+                      <Pressable onPress={() => setActiveForm(type as any)}
+                        disabled={isDisabled}
+                      >
+                        <Icon name={iconName} style={[styles.styleIcon, (isActive || isDisabled) && { color: isActive ? "white" : "#ccc", fontSize: 26 }]} />                      
                       </Pressable>
                     </View>
                   );
                 })}
               </View>
               <View style={styles.btnRight}>
-                <Pressable onPress={() => console.log("Guardar nota")}>
-                  <Text style={styles.saveText}>Guardar</Text>
+                <Pressable onPress={() => 
+                {
+                  if (isSaveEnabled) {
+                    console.log("Guardar nota");
+                  }
+                }}>
+                  <Text style={[styles.saveText, { color: isSaveEnabled ? colors.backgroundApp : '#aaa' }]}>Guardar</Text>
                 </Pressable>
               </View>
             </View>
@@ -142,6 +173,7 @@ export default function AddNoteModal({ visible, onClose }: Props) {
               contact={item}
               allowPressOnRelated
               onPress={() => {
+                setSelectedContact(item);
                 console.log("Contacto seleccionado:", item.name);
                 setListVisible(false);
               }}
@@ -161,6 +193,7 @@ export default function AddNoteModal({ visible, onClose }: Props) {
     </View>
   );
 }
+export default AddNoteModal;
 
 const styles = StyleSheet.create({
   overlay: { flex: 1, justifyContent: "flex-start", alignItems: "center", backgroundColor: "rgba(0, 0, 0, 0.44)" },
@@ -183,5 +216,8 @@ const styles = StyleSheet.create({
   saveText: { fontSize: typography.fontSizeM, color: "rgba(78, 76, 76, 0.78)" },
   //Estilos para los scrollView
   btnContainer: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, marginTop: spacing.md, overflow: 'hidden',},
-
+  resultBtn:{borderWidth: 2, borderRadius: 80, padding: spacing.sm, marginLeft: spacing.lg, marginBottom: spacing.md, borderColor:'rgba(153, 149, 149, 0.53)',},
+  //Estilo Activo
+  resultBtnActive: { borderColor: colors.backgroundApp, backgroundColor: colors.backgroundApp,},
+  resultText: { fontSize: typography.fontSizeM, color: 'rgba(68, 67, 67, 0.82)', fontWeight: '400',},
 });

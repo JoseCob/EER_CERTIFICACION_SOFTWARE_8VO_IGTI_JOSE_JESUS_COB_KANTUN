@@ -1,3 +1,7 @@
+/*  Función que elimina emojis y símbolos especiales del nombre. 
+    Extrae las iniciales de las palabras. 
+    Devuelve solo los primeros 2 caracteres en mayúsculas.
+*/
 export function GetContactInitials(name: string): string {
     return name
         .replace(

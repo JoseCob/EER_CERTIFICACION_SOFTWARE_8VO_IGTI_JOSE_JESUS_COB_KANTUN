@@ -15,3 +15,16 @@ export const RelationshipQueries = async () => {
         return [];
     }
 };
+
+//Cuenta los contactos relacionados -> servira para el grafico de relaciones feature/dashboard
+export const getRelationshipCount = async (): Promise<number> => {
+    try {
+        const result = await db.getFirstAsync<{ count: number }>(
+          `SELECT COUNT(*) as count FROM relationships`
+        );
+        return result?.count || 0;
+    } catch (err) {
+        console.error("Error al contar relaciones:", err);
+        return 0;
+    }
+};

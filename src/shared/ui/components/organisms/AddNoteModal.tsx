@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, View, Pressable, Text, TextInput, FlatList, StyleSheet } from "react-native";
+import { Modal, View, Pressable, Text, TextInput, FlatList, StyleSheet, ScrollView } from "react-native";
 import { spacing, colors, typography } from "@/shared/theme";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -52,6 +52,49 @@ export default function AddNoteModal({ visible, onClose }: Props) {
                 multiline
                 placeholder="Tu nota"
               />
+              {activeForm === "interaction" && (
+                <View style={{ width: "100%", marginTop: spacing.xs }}>
+                  <Text style={{ fontSize: typography.fontSizeM, fontWeight: "bold"}}>
+                    ¿Cómo se pusieron al día?
+                  </Text>
+                  {/* Tipos de interacción */}
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.btnContainer}>
+                      {["Llamada", "Mensaje", "Correo", "Reunión en persona", "Red social", "Videollamada", "Conferencia"].map((type) => (
+                        <Pressable
+                          key={type}
+                          style={{
+                            backgroundColor: "#f0f0f0",
+                            padding: 8,
+                            borderRadius: 8,
+                            marginRight: 8,
+                            marginBottom: 8
+                          }}
+                          onPress={() => console.log("Tipo de interacción:", type)}
+                        >
+                          <Text>{type}</Text>
+                        </Pressable>
+                      ))}
+                    </ScrollView>
+                  {/* Fechas predefinidas */}
+                  <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.btnContainer}>
+                    {["Hoy", "Ayer", "Hace una semana", "Hace un mes"].map((label) => (
+                      <Pressable
+                        key={label}
+                        style={{
+                          backgroundColor: "#f0f0f0",
+                          padding: 8,
+                          borderRadius: 80,
+                          marginRight: 8,
+                          marginBottom: 8
+                        }}
+                        onPress={() => console.log("Fecha seleccionada:", label)}
+                      >
+                        <Text>{label}</Text>
+                      </Pressable>
+                    ))}
+                  </ScrollView>
+                </View>
+              )}
             </View>
 
             <View style={styles.modalFooter}>
@@ -89,7 +132,7 @@ export default function AddNoteModal({ visible, onClose }: Props) {
         </View>
       </Modal>
 
-      {/* Modal para seleccionar contacto */}
+      {/* Modal para seleccionar contacto relacionado */}
       <RelatedContactsModal visible={listVisible} onClose={() => setListVisible(false)}>
         <FlatList
           data={onlyRelatedContacts}
@@ -130,7 +173,7 @@ const styles = StyleSheet.create({
   modalContent: { width: "100%", alignItems: "flex-start", paddingHorizontal: spacing.lg, marginBottom: spacing.md },
   containerAddContact: { width: "100%", marginBottom: 8 },
   btnContactSelect: { padding: 8, borderWidth: 1, fontSize: typography.fontSizeM, borderLeftWidth: 0, borderTopWidth: 0, borderRightWidth: 0, borderColor: "rgba(153, 149, 149, 0.53)", color: "rgba(78, 76, 76, 0.78)" },
-  textArea: { width: "100%", textAlignVertical: "top", height: 125, fontSize: 18 },
+  textArea: { width: "100%", textAlignVertical: "top", height: 80, fontSize: 18 },
   modalFooter: { width: "100%", flexDirection: "row", alignItems: "center", borderTopWidth: 2, borderColor: "rgba(153, 149, 149, 0.53)" },
   btnIconLeft: { flexDirection: "row", backgroundColor: colors.surface, borderRadius: spacing.xl, marginLeft: spacing.lg, borderWidth: 1, marginTop: spacing.md, borderColor: "rgba(153, 149, 149, 0.53)" },
   btnIcon: { margin: -2, paddingHorizontal: spacing.lg, paddingVertical: spacing.md },
@@ -138,4 +181,7 @@ const styles = StyleSheet.create({
   btnActive: { backgroundColor: colors.backgroundApp, borderRadius: spacing.xxl },
   btnRight: { flex: 1, paddingRight: spacing.lg, marginTop: spacing.md, alignItems: "flex-end" },
   saveText: { fontSize: typography.fontSizeM, color: "rgba(78, 76, 76, 0.78)" },
+  //Estilos para los scrollView
+  btnContainer: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, marginTop: spacing.md, overflow: 'hidden',},
+
 });

@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { AnimatedCircularProgress } from 'react-native-circular-progress'; //Dependencia para crear la gráfica circular de progreso tipo anillo
 import FontAwesome from '@expo/vector-icons/FontAwesome'; //Icono para la tarjeta de relaciones
 import { colors, spacing, typography } from '@/shared/theme'; //Hoja de Estilos generales
+import { useRelationshipStatsStore } from "../../../store/RelationshipStatsStore";
 
 export default function RelationshipGraph () {
+    const { count, fetchCount } = useRelationshipStatsStore();
+    
+    useEffect(() => {
+        fetchCount();
+    }, []);
+
     return (
         <View style={styles.graphicCard1}>
             <View style={styles.content}>
@@ -32,7 +39,7 @@ export default function RelationshipGraph () {
                     <View style={styles.resultsSection}>
                         <Text style={styles.resultText}>Relaciones</Text>
                         <FontAwesome name="group" style={styles.resultText}/>
-                        <Text style={styles.countText}>4</Text>
+                        <Text style={styles.countText}>{count}</Text>
                     </View>
                 </View>
             </View>

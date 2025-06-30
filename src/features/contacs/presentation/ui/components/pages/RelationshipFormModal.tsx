@@ -4,6 +4,7 @@ import { typography } from "@/shared/theme";
 import { ModalBaseProps } from "@/shared/types/ui";
 import { ContactEntity } from "@/features/contacs/domain/entities/ContactEntity";
 import { useContactsWithRelationStore } from "../../../store/ContactsWithRelationStore";
+import { useRelationshipStatsStore } from "@/features/dashboard/presentation/store/RelationshipStatsStore";
 import { useRelationshipFormViewModel } from "../../../viewmodels/useRelationshipFormViewModel";
 import { insertRelationship } from "@/core/database/migrations/tables/RelationshipDB";
 // ---- Archivos de los componentes de la UI ---- //
@@ -63,6 +64,7 @@ const RelationshipFormModal:React.FC<FormModalProps> = ({
                                         form.familyInfo
                                     );
                                     useContactsWithRelationStore.getState().fetchRelatedContacts(); //Almacena en tiempo real con zustand
+                                    useRelationshipStatsStore.getState().fetchCount(); //Muestra en tiempo real el contador del dashboard de relaciones
                                     console.log("Relación guardada por SQLite al usuario:", contact.name);
                                     onClose(); // Cierra el modal al guardar
                                 } catch (error: any) {

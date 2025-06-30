@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         resizeMode:'contain',
         width: 60,
         height: 60,
-        borderRadius: 50,
+        borderRadius: 80,
     },
     //Contenedor para la información del contacto
     contactInfo:{

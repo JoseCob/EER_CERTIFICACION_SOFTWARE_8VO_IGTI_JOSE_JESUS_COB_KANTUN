@@ -32,6 +32,11 @@
     },
     "plugins": [
       "expo-sqlite"
+    ],
+    "expo-calendar": [
+      {
+        "calendarPermission": "La aplicación necesita acceder a tu calendario."
+      }
     ]
   }
 }

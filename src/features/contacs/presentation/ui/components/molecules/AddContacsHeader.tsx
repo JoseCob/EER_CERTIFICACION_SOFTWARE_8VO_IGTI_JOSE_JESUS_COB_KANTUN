@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     btnAddContact:{
         flexDirection: 'row',
         alignItems: 'center',
-        paddingLeft: 40,
+        paddingLeft: spacing.xxl,
         paddingTop: spacing.md,
         paddingBottom: spacing.md,
     },
@@ -33,10 +33,10 @@ const styles = StyleSheet.create({
         backgroundColor: colors.btnPressed,
     },
     contactIcon:{
-        borderRadius: 26,
+        borderRadius: 80,
         padding: spacing.md,
-        marginRight: spacing.md,
-        fontSize: typography.fontSizeXL,
+        marginRight: spacing.lg,
+        fontSize: 32,
         color: colors.surface,
         backgroundColor: colors.backgroundApp,
     },

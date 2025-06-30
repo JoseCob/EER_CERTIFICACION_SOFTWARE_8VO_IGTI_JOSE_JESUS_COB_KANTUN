@@ -32,7 +32,7 @@
 
 ## -- Imagen de la estructura del proyecto --
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/31784924-1b08-4004-9498-149573e7b692"/>
+  <img src="https://github.com/JoseCob/EER_CERTIFICACION_SOFTWARE_8VO_IGTI_JOSE_JESUS_COB_KANTUN/blob/JoseCob-Imagenes-de-prueba/Captura%20de%20pantalla%20(743).png?raw=true"/>
 </p>
 
 ## -- Tecnologías y Librerías que se utilizaron en la aplicación --

@@ -32,7 +32,11 @@
 
 ## -- Imagen de la estructura del proyecto --
 <p align="center">
-  <img src="https://github.com/JoseCob/EER_CERTIFICACION_SOFTWARE_8VO_IGTI_JOSE_JESUS_COB_KANTUN/blob/JoseCob-Imagenes-de-prueba/Captura%20de%20pantalla%20(743).png?raw=true"/>
+  <img src="https://github.com/JoseCob/EER_CERTIFICACION_SOFTWARE_8VO_IGTI_JOSE_JESUS_COB_KANTUN/blob/JoseCob-Imagenes-de-prueba/Captura%20de%20pantalla%20(741).png?raw=true" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/JoseCob/EER_CERTIFICACION_SOFTWARE_8VO_IGTI_JOSE_JESUS_COB_KANTUN/blob/JoseCob-Imagenes-de-prueba/Captura%20de%20pantalla%20(743).png?raw=true" />
 </p>
 
 ## -- Tecnologías y Librerías que se utilizaron en la aplicación --

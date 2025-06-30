@@ -6,7 +6,7 @@ export class ContactsRepositoryImpl implements ContactsRepository {
     private dataSource = new ContactsDataSource();
 
     async getContacts(): Promise<ContactEntity[]> {
-        const raw = (await this.dataSource.getRawContacts()).filter(c => c.id && c.phoneNumbers && c.phoneNumbers.length > 0);
+        const raw = (await this.dataSource.getRawContacts())
         return raw.map(c => ({
             id: c.id!,
             name: c.name || c.phoneNumbers?.[0]?.number || 'Nombre desconocido',

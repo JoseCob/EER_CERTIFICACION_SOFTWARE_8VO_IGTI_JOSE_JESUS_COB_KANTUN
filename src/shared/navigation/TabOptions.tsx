@@ -21,8 +21,6 @@ export const getTabOptions = ({ route }: { route: { name: string } }): BottomTab
                     return focused ? 'analytics' : 'analytics-outline';
                 case 'Contactos':
                     return focused ? 'people' : 'people-outline';
-                case 'Test':
-                    return focused ? 'help-circle-outline' : 'help-circle-outline';
             default:
                 return 'help-circle-outline';
             }

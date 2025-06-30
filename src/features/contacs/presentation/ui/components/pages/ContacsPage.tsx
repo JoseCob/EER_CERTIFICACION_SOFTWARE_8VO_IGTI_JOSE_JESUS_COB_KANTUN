@@ -6,9 +6,9 @@ import ContacsHeaderTemplate from "../templates/ContacsHeaderTemplate";
 import ContacsListTemplate from "../templates/ContacsListTemplate";
 import { UseContactsPermissionStore } from "../../../store/ContactsPermissionStore";
 import { RootTabNavigation } from '@/shared/navigation/NavigatorTypes'; //Navegación tipada para acceder a cualquier vista desde componentes externos
-import AddRelationshipModal from '../molecules/AddRelationshipModal';
+import ConfirmRelMondal from '@/shared/ui/components/pages/ConfirmRelModal';
 import { ContactEntity } from "@/features/contacs/domain/entities/ContactEntity";
-import RelationshipFormModal from '../organisms/RelationshipFormModal';
+import RelationshipFormModal  from '@/features/contacs/presentation/ui/components/pages/RelationshipFormModal'; // Modal para añadir relaciones
 import CalendarModal from '@/shared/ui/components/organisms/CalendarModal';
 import { useContactsWithRelationStore } from '../../../store/ContactsWithRelationStore';
 
@@ -84,7 +84,7 @@ export default function ContacsPage () {
     }, []);
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, marginBottom:-25}}>
             <ContacsTemplate>
                 <ContacsHeaderTemplate>
                     <View></View>
@@ -93,63 +93,63 @@ export default function ContacsPage () {
                 {loading ? (
                     <ActivityIndicator size="large" color={"blue"} style={{ flex:1 }}/>
                 ) : (
-                  <ContacsListTemplate
-                    contacts={sortedContacts}
-                    onSelectContact={(contact) => {
-                        if (contact.isRelated) return; // Desactiva si ya está relacionado
-                        console.log("Contacto seleccionado:", contact.name)
-                        setSelectedContact(contact); // Guarda el contacto seleccionado
-                        setAddRelationship(true); // Muestra modal de crear relación
-                    }}
-                  />
+                    <ContacsListTemplate
+                        contacts={sortedContacts}
+                        onSelectContact={(contact) => {
+                            if (contact.isRelated) return; // Desactiva si ya está relacionado
+                            console.log("Contacto seleccionado:", contact.name)
+                            setSelectedContact(contact); // Guarda el contacto seleccionado
+                            setAddRelationship(true); // Muestra modal de crear relación
+                        }}
+                    />
                 )}
+                
+                {/*Modal que se abre al seleccionar un contacto para indicarle si desea crear una relación */}
+                <ConfirmRelMondal 
+                    visible={AddRelationship} 
+                    onClose={() => setAddRelationship(false)} 
+                    contact={selectedContact} //Pasas el contacto seleccionado
+                    onCreateRelationship={() => {
+                        setAddRelationship(false); // Cierra modal actual
+                        setShowFormModal(true); // Abre modal de formulario
+                    }}
+                />
+
+                {/*Modal del formulario que crea la relación del contacto */}
+                <RelationshipFormModal
+                    visible={showFormModal} 
+                    contact={selectedContact} //Pasas el contacto seleccionado
+                    onClose={() => setShowFormModal(false)}
+                    onCalendarModal={() => {
+                        setShowCalendarModal(true); // Abre modal de calendario
+                    }} 
+                    lastInteraction={lastInteraction}
+                    setLastInteraction={setLastInteraction}
+                    lastInteractionDate={lastInteractionDate}
+                    setLastInteractionDate={setLastInteractionDate}
+                    shouldPersistDateSelection={shouldPersistDateSelection}
+                    setShouldPersistDateSelection={setShouldPersistDateSelection}
+                />
+
+                {/*Modal del calendario del formulario*/}
+                <CalendarModal 
+                    visible={showCalendarModal} 
+                    onClose={() => {
+                        setShowCalendarModal(false);
+                        //Si la última selección fue "ellipsis1", limpia el estado
+                        if (lastInteraction === "ellipsis1" && !shouldPersistDateSelection) {
+                          setLastInteraction(null);
+                        }
+                    }}
+                    onConfirm={(selectedDate) => {
+                        setLastInteractionDate(selectedDate); //Actualiza la fecha
+                        setShowCalendarModal(false);
+                    }}
+                    defaultDate={lastInteractionDate || new Date()}
+                    shouldPersistDateSelection={shouldPersistDateSelection}
+                    setShouldPersistDateSelection={setShouldPersistDateSelection}
+                />
             </ContacsTemplate>
-
-            {/*Modal que se abre al seleccionar un contacto para indicarle si desea crear una relación */}
-            <AddRelationshipModal 
-                visible={AddRelationship} 
-                onClose={() => setAddRelationship(false)} 
-                contact={selectedContact} //Pasas el contacto seleccionado
-                onCreateRelationship={() => {
-                    setAddRelationship(false); // Cierra modal actual
-                    setShowFormModal(true); // Abre modal de formulario
-                }}
-            />
-
-            {/*Modal del formulario que crea la relación del contacto */}
-            <RelationshipFormModal
-                visible={showFormModal} 
-                contact={selectedContact} //Pasas el contacto seleccionado
-                onClose={() => setShowFormModal(false)}
-                onCalendarModal={() => {
-                    setShowCalendarModal(true); // Abre modal de calendario
-                }} 
-                lastInteraction={lastInteraction}
-                setLastInteraction={setLastInteraction}
-                lastInteractionDate={lastInteractionDate}
-                setLastInteractionDate={setLastInteractionDate}
-                shouldPersistDateSelection={shouldPersistDateSelection}
-                setShouldPersistDateSelection={setShouldPersistDateSelection}
-            />
-
-            {/*Modal del calendario del formulario*/}
-            <CalendarModal 
-                visible={showCalendarModal} 
-                onClose={() => {
-                    setShowCalendarModal(false);
-                    //Si la última selección fue "ellipsis1", limpia el estado
-                    if (lastInteraction === "ellipsis1") {
-                      setLastInteraction(null);
-                    }
-                }}
-                onConfirm={(selectedDate) => {
-                    setLastInteractionDate(selectedDate); //Actualiza la fecha
-                    setShowCalendarModal(false);
-                }}
-                defaultDate={lastInteractionDate || new Date()}
-                shouldPersistDateSelection={shouldPersistDateSelection}
-                setShouldPersistDateSelection={setShouldPersistDateSelection}
-            />
         </View>
     );
 }

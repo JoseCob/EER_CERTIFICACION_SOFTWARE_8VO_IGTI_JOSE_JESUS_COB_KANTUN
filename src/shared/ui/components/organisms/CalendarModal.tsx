@@ -4,6 +4,7 @@ import { spacing, typography, colors } from "@/shared/theme";
 import { Calendar } from 'react-native-calendars';
 import { format } from 'date-fns-tz';
 import { LocaleConfig } from 'react-native-calendars';
+import { ModalBaseProps } from "@/shared/types/ui"; //Props base para Modales
 
 LocaleConfig.locales['es'] = {
   monthNames: [
@@ -23,9 +24,7 @@ LocaleConfig.locales['es'] = {
 LocaleConfig.defaultLocale = 'es';
 
 //props para el modal
-interface FormModalProps {
-    visible: boolean; //Controla la visibilidad del modal
-    onClose: () => void; // para cerrar/abrir el modal
+interface FormModalProps extends ModalBaseProps {
     onConfirm: (selectedDate: Date) => void;
     defaultDate?: Date;
     shouldPersistDateSelection: boolean;

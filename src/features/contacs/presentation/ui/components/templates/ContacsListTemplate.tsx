@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList  } from 'react-native';
 import ContacsListCard from '../organisms/ContacsListCard';
-import { ContactEntity } from '@/features/contacs/domain/entities/ContactEntity'; // o la ruta correcta
+import { ContactEntity } from '@/features/contacs/domain/entities/ContactEntity';
 
 interface Props {
     contacts: ContactEntity[];
@@ -11,7 +11,6 @@ interface Props {
 export default function ContacsListTemplate ({ contacts, onSelectContact }: Props ) {
     return (
         <FlatList 
-            contentContainerStyle={{ paddingTop: 150 }} 
             showsVerticalScrollIndicator={false}
             data={contacts}
             keyExtractor={(item, index) => item.id || index.toString()}

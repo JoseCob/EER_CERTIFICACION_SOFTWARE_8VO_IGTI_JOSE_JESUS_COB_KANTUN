@@ -3,10 +3,17 @@ import { StyleSheet, Text, View, Pressable } from "react-native";
 import { colors, typography, spacing } from '@/shared/theme'; //Hoja de Estilos generales
 import Entypo from '@expo/vector-icons/Entypo'; //Icono para el botón agregar notas
 
-export default function AddNoteFooter () {
+interface Props {
+  onPress: () => void;
+}
+
+export default function AddNoteFooter ({ onPress }: Props) {
     return (
         <View style={styles.addNotes}>
-            <Pressable onPress={()=>console.log("Botón para agregar notas")}>
+            <Pressable onPress={()=>{
+                console.log("Botón para agregar notas");
+                onPress();
+            }}>
                 {({pressed}) => (
                     <View style={[styles.btnAddNote, pressed && styles.pressedAddNote]}>
                         <Entypo name="add-to-list" size={24} color="white" />

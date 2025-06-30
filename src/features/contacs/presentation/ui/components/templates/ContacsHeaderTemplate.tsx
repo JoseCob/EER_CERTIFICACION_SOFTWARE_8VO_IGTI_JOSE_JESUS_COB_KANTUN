@@ -18,7 +18,7 @@ export default function ContacsHeaderTemplate ({ children }: { children: React.R
 
 const styles = StyleSheet.create({
     headerContent:{
-        position: 'absolute',
+        position: 'relative',
         top: spacing.none,
         left: spacing.none,
         right: spacing.none,

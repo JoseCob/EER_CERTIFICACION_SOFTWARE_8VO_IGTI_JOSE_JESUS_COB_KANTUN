@@ -3,32 +3,9 @@
 ## -- Estructura del proyecto --
 > Mi proyecto está estructurado siguiendo Clean Architecture y Atomic Design. Dentro de features separo cada módulo por pantalla o dominio, y uso data, domain y presentation para organizar los datos, lógica de negocio y presentación respectivamente. Todo lo reutilizable como navegación, tipos o componentes UI comunes está en la carpeta shared.
 
-📦 src/ --> carpeta raíz del código fuente.
-├── 📁 core/
-│   └── 📁 database/ -->  configuración, migraciones de la base de datos, tablas y consultas.
-│       ├── 📁 migrations/ 
-│       ├── 📁 tables/
-│       ├── 📁 queries/
-│       └── SQLiteConfig.ts
-├── 📁 features/ --> módulo funcional del proyecto que se dividen por pantallas
-│   ├── 📁 contacts/
-│   │   ├── data/ --> fuentes de datos (API, SQLite, etc.). 
-│   │   ├── domain/ --> lógica de negocio, entidades y casos de uso.
-│   │   └── presentation/ --> capa de interfaz de usuario (UI), estados(zustand) y logica para las vistas
-│   ├── 📁 dashboard/ --> feature para la pantalla de estadisticas
-│   └── 📁 home/ --> feature para la pantalla de inicio de la app
-├── 📁 shared/ --> Elementos reutilizables por varias features, tambien llamados archivos globales.
-│   ├── navigation/ --> configuración de navegación.
-│   ├── theme/ --> temas y estilos globales.
-│   ├── types/ --> tipos TypeScript comunes (props) para las interfaces.
-│   └── ui/components --> componentes reutilizables organizados con Atomic Design:
-│       ├── atoms/ --> elementos básicos (botones, texto).
-│       ├── molecules/ --> combinaciones simples (inputs con etiquetas, etc.).
-│       ├── organisms/ --> componentes complejos (formularios, modales).
-│       ├── pages/ --> vistas más completas.
-│       └── templates/ --> plantillas o contenedores bases
-│   ├── utils/ --> funciones auxiliares, se utilizo para dar formato al perfil de los contactos (imagen del contacto)
-└── App.tsx --> archivo principal o punto de entrada, se encarga de ejecutar la aplicación
+<p align="center">
+  <img src="https://github.com/JoseCob/EER_CERTIFICACION_SOFTWARE_8VO_IGTI_JOSE_JESUS_COB_KANTUN/blob/JoseCob-Imagenes-de-prueba/Arquitectura_src.png?raw=true" />
+</p>
 
 ## -- Imagen de la estructura del proyecto --
 <p align="center">

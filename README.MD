@@ -31,7 +31,7 @@
 └── App.tsx --> archivo principal o punto de entrada, se encarga de ejecutar la aplicación
 
 ## -- Imagen de la estructura del proyecto --
-![Vista_1_src](https://media.istockphoto.com/id/1127471287/es/foto/queso-blanco.jpg?s=612x612&w=0&k=20&c=o5PvkTyLvn7c0hcu1EOnmnSrvTv8h2Vhg8jyI-4aq0s=)
+![Vista_1_src](https://github.com/JoseCob/EER_CERTIFICACION_SOFTWARE_8VO_IGTI_JOSE_JESUS_COB_KANTUN/blob/JoseCob-Imagenes-de-prueba/Captura%20de%20pantalla%20(743).png?raw=true)
 
 ## -- Tecnologías y Librerías que se utilizaron en la aplicación --
 1. expo-contacts

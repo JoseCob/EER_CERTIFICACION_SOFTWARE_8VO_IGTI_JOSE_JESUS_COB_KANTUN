@@ -13,7 +13,7 @@ interface RelatedContactsState {
     fetchOnlyRelatedContacts: () => Promise<void>;
 }
 
-
+//Función que obtiene contactos con relación
 export const useContactsWithRelationStore = create<State>((set) => ({
     relatedContacts: [],
     fetchRelatedContacts: async () => {
@@ -23,7 +23,7 @@ export const useContactsWithRelationStore = create<State>((set) => ({
     },
 }));
 
-//Función Solo para contactos relacionados
+//Función que muestra solo contactos relacionados
 export const useOnlyRelatedContactsStore = create<RelatedContactsState>((set) => ({
     onlyRelatedContacts: [],
     fetchOnlyRelatedContacts: async () => {
